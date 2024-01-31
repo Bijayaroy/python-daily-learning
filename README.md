@@ -139,3 +139,91 @@ for i in range(10):
  continue
 print(i)
 ```
+## Day 6 : Functions
+### Functions:
+A function is a block of organized, reusable code that performs a specific task.
+Functions help in modularizing code and promoting reusability.
+
+Syntax:
+```python
+def function_name(parameters):
+    # Function body
+    # ...
+    return result  # optional
+```
+Example:
+
+```python
+def greet(name):
+    return f"Hello, {name}!"
+
+result = greet("John")
+print(result)
+```
+
+
+### Parameters and Arguments:
+
+Parameters are variables in a function definition.
+Arguments are values passed into a function.
+
+
+### Return Statement:
+
+A function can return a value using the return statement.
+If no return statement is present, the function returns None by default.
+
+
+### Scope:
+
+Variables defined inside a function are local to that function.
+Variables defined outside functions are global.
+
+## Day 7: Modular Programming:
+### Modular Programming:
+Modular programming is a software design technique where a program is divided into independent, interchangeable modules.
+Advantages:
+
+Reusability: Modules can be reused in different parts of the program.
+Maintainability: Changes in one module don't affect others if the interface remains the same.
+Scalability: Easier to scale by adding or removing modules.
+How to Create Modules:
+
+Save a Python script (.py file) with functions and variables.
+Import the module into another script using import module_name.
+Example Module (math_operations.py):
+
+```python
+# math_operations.py
+def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+```
+Using the Module in Another Script:
+
+```python
+# main_script.py
+import math_operations
+
+result_add = math_operations.add(5, 3)
+result_subtract = math_operations.subtract(8, 4)
+
+print(result_add, result_subtract)
+```
+### if name == "main":
+
+Allows a script to be used both as an importable module and as a standalone script.
+```python
+# math_operations.py
+def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+
+if __name__ == "__main__":
+    # Code only executed when the script is run directly
+    print(add(5, 3))
+```
