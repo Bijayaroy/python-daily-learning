@@ -227,3 +227,69 @@ if __name__ == "__main__":
     # Code only executed when the script is run directly
     print(add(5, 3))
 ```
+## Day 8: Arrays
+In Python, arrays are often implemented using the built-in list type. The array can also be handled in Python by a module named array. They can be useful when we have to manipulate only specific data type values. A user can treat lists as arrays. However, the user cannot constrain the type of elements stored in a list. If you create arrays using the array module, all elements of the array must be of the same type.  While Python doesn't have a native array type like some other programming languages, its lists provide dynamic arrays with additional functionalities. (Source: GeeksForGeeks)
+
+### Arrays (using Python Lists):
+Creation:
+```python
+my_array = [1, 2, 3, 4, 5]
+```
+### Adding Elements:
+
+You can use append() to add elements to the end of the array.
+```python
+my_array.append(6)
+```
+### Removing Elements:
+
+Use .pop() or .remove() to remove and return an element by index.
+```python
+removed_element = my_array.pop(2)
+```
+### Indexing and Slicing:
+
+Slice operation is performed on array with the use of colon(:). To print elements from beginning to a range use [:Index], to print elements from end use [:-Index], to print elements from specific Index till the end use [Index:], to print elements within a range, use [Start Index:End Index] and to print whole List with the use of slicing operation, use [:]. Further, to print whole array in reverse order, use [::-1].
+```python
+sublist = my_list[1:4]  # Elements from index 1 to 3
+```
+Common Operations:
+
+Find the index of an element: my_array.index(element).
+Count occurrences of an element: my_array.count(element).
+
+
+NumPy Arrays:
+If you need more advanced array manipulation and operations, you can use the NumPy library, which provides efficient and convenient array-like objects.
+
+Installation:
+
+`
+pip install numpy
+`
+
+
+Creating NumPy Arrays:
+
+```python
+import numpy as np
+numpy_array = np.array([1, 2, 3, 4, 5])
+```
+Operations:
+
+NumPy allows element-wise operations and supports a variety of mathematical operations directly on arrays.
+```python
+result_array = numpy_array * 2
+```
+### Array Manipulation:
+
+Reshaping: numpy_array.reshape(rows, columns).
+Concatenation: np.concatenate((array1, array2)).
+ 
+Similar to Python lists but extended for multi-dimensional arrays.
+```python
+squared_array = [x**2 for x in range(1, 6)]
+```
+Important Note:
+- NumPy arrays are more efficient for numerical computations compared to Python lists, especially for large datasets.
+- When dealing with mathematical and scientific computations involving arrays, NumPy is the preferred choice due to its optimized implementations.
