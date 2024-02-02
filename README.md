@@ -293,3 +293,84 @@ squared_array = [x**2 for x in range(1, 6)]
 Important Note:
 - NumPy arrays are more efficient for numerical computations compared to Python lists, especially for large datasets.
 - When dealing with mathematical and scientific computations involving arrays, NumPy is the preferred choice due to its optimized implementations.
+
+## Day 9 : Programs related to Array:
+
+### Printing an array:
+```python
+import array as arr
+
+# create an array of integers
+numbers = arr.array('i', [1, 2, 3, 4, 5])
+
+# print the array
+print(numbers)
+
+# Output: array('i', [1, 2, 3, 4, 5])
+```
+### Finding the largest number in an array:
+```python
+import array as arr
+
+# create an array of integers
+numbers = arr.array('i', [10, 5, 15, 4, 6, 20, 9])
+
+# find the largest number
+largest = numbers[0]
+for i in range(1, len(numbers)):
+    if numbers[i] > largest:
+        largest = numbers[i]
+
+# print the largest number
+print("Largest number:", largest)
+
+# Output: Largest number: 20
+```
+### Sum of elements in an array:
+```python
+def sum(arr):
+    result = 0
+    for x in arr:
+        result += x
+    return result
+```
+### Storing all even numbers from an array in another array:
+```python
+import array as arr
+
+# create an array of integers
+numbers = arr.array('i', [10, 5, 15, 4, 6, 20, 9])
+
+# create an empty array to store even numbers
+even_numbers = arr.array('i', [])
+
+# iterate over the original array and add even numbers to the new array
+for number in numbers:
+    if number % 2 == 0:
+        even_numbers.append(number)
+
+# print the new array
+print(even_numbers)
+
+# Output: array('i', [10, 4, 6, 20])
+```
+### Finding the average of all numbers in an array:
+```python
+import array as arr
+
+# create an array of integers
+numbers = arr.array('i', [1, 2, 3, 4, 5])
+
+# calculate the sum of all numbers
+sum = 0
+for number in numbers:
+    sum += number
+
+# calculate the average
+average = sum / len(numbers)
+
+# print the average
+print("Average:", average)
+
+# Output: Average: 3.0
+```
