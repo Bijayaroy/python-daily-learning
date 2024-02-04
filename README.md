@@ -374,3 +374,125 @@ print("Average:", average)
 
 # Output: Average: 3.0
 ```
+## Day 10: More Functions for Array
+Some more useful functions provided in Python for arrays:
+
+### Array Typecode Function
+This function returns the data type by which the array is initialized. In this example, we are using arr.typecode to find out the data type of array initialization.
+
+```python
+# importing "array" for array operations
+import array
+    
+# initializing array with array values
+arr= array.array('i',[1, 2, 3, 1, 2, 5]) 
+   
+# using typecode to print datatype of array
+print ("The datatype of array is : ")
+print (arr.typecode)
+#Output
+
+#The datatype of array is : 
+#i
+```
+
+### Array itemsize Function
+This function returns the size in bytes of a single array element. In this example, we are using itemsize function to find out the size in byte of an array element.
+
+```python
+# importing "array" for array operations
+import array
+    
+# initializing array with array values
+arr= array.array('i',[1, 2, 3, 1, 2, 5]) 
+   
+# using itemsize to print itemsize of array
+print ("The itemsize of array is : ")
+print (arr.itemsize)
+#Output
+#The itemsize of array is : 
+#4
+```
+
+### buffer_info() in Python
+Returns a tuple representing the address in which array is stored and number of elements in it. In this example, we are using buffer_info() to do the same.
+
+```python
+# importing "array" for array operations
+import array
+    
+# initializing array with array values
+arr= array.array('i',[1, 2, 3, 1, 2, 5]) 
+ 
+# using buffer_info() to print buffer info. of array
+print ("The buffer info. of array is : ")
+print (arr.buffer_info())
+#Output
+#The buffer info. of array is : 
+#(140491260368688, 6)
+```
+
+### Array fromlist() Function
+This function is used to append a list mentioned in its argument to end of array. In this example, we are using fromlist() to append a list to end of array.
+
+```python
+# importing "array" for array operations
+import array
+    
+# initializing array with array values
+arr = array.array('i',[1, 2, 3, 1, 2, 5]) 
+li = [1, 2, 3]
+   
+# using fromlist() to append list at end of array
+arr.fromlist(li)
+   
+# printing the modified array
+print ("The modified array is : ",end="")
+for i in range (0,9):
+    print (arr[i],end=" ")
+#Output
+#The modified array is : 1 2 3 1 2 5 1 2 3 
+```
+
+### tolist() in Python
+This function is used to transform an array into a list. In this example, we are using tolist() to convert an array to list.
+
+```python
+# importing "array" for array operations
+import array
+    
+# initializing array with array values
+arr = array.array('i',[1, 2, 3, 1, 2, 5]) 
+   
+# using tolist() to convert array into list
+li2 = arr.tolist()
+   
+# printing the new list
+print ("The new list created is : ",end="")
+for i in range (0,len(li2)):
+    print (li2[i],end=" ")
+#Output
+#The new list created is : 1 2 3 1 2 5 
+```
+# Day 11: Strings
+In Python, a string is a sequence of characters enclosed within single quotes (' '), double quotes (" "), or triple quotes (''' ''' or """ """). 
+
+Strings are immutable, meaning that once they are created, their values cannot be changed.
+Like many other popular programming languages, strings in Python are arrays of bytes representing unicode characters.
+However, Python does not have a character data type, a single character is simply a string with a length of 1.
+Square brackets can be used to access elements of the string.
+```python
+a = "Hello, World!"
+print(a[1])
+```
+Assigning a string to a variable is done with the variable name followed by an equal sign and the string:
+```python
+a = "Hello"
+print(a)
+```
+Python provides a variety of built-in methods for manipulating strings. Some commonly used methods include:
+
+- len(string): Returns the length of the string.
+- string.lower(), string.upper(): Converts the string to lowercase or uppercase.
+- string.startswith(prefix), string.endswith(suffix): Checks if the string starts or ends with a specified prefix or suffix.
+- string.find(substring): Returns the index of the first occurrence of the substring, or -1 if not found.
