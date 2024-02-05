@@ -496,3 +496,35 @@ Python provides a variety of built-in methods for manipulating strings. Some com
 - string.lower(), string.upper(): Converts the string to lowercase or uppercase.
 - string.startswith(prefix), string.endswith(suffix): Checks if the string starts or ends with a specified prefix or suffix.
 - string.find(substring): Returns the index of the first occurrence of the substring, or -1 if not found.
+
+# Day 12: Strings(contd.)
+More functions related to it:
+string.strip(), string.lstrip(), string.rstrip(): Removes any whitespaces before or at the end.
+```python
+sentence = "   This is a sample sentence.   "
+print(sentence.strip())
+# Output: "This is a sample sentence."
+```
+Check String: To check if a certain phrase or character is present in a string, we can use the keyword in.
+```python
+txt = "The best things in life are free!"
+print("free" in txt)
+
+text = "The best things in life are free!"
+print("expensive" not in text)
+```
+Slicing: You can return a range of characters by using the slice syntax. Specify the start index and the end index, separated by a colon, to return a part of the string.
+```python
+b = "Hello, World!"
+print(b[2:5])
+```
+Replace String: The replace() method replaces a string with another string:
+```python
+a = "Hello, World!"
+print(a.replace("H", "J"))
+```
+Split String: The split() method returns a list where the text between the specified separator becomes the list items.
+```python
+a = "Hello, World!"
+print(a.split(",")) # returns ['Hello', ' World!']
+```
