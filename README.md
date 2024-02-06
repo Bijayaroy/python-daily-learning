@@ -528,3 +528,184 @@ Split String: The split() method returns a list where the text between the speci
 a = "Hello, World!"
 print(a.split(",")) # returns ['Hello', ' World!']
 ```
+# Day 13 : Numpy array
+
+NumPy arrays are a fundamental data structure in the NumPy library, which is a popular Python library used for numerical computing. NumPy arrays provide a way to store and manipulate large arrays of numerical data efficiently.
+
+Here's a brief overview of NumPy arrays:
+
+Homogeneous Data: NumPy arrays are homogeneous, meaning all elements in the array must have the same data type. This contrasts with Python lists, which can contain elements of different data types.
+
+Multidimensional: NumPy arrays can have any number of dimensions. The most common are 1-dimensional arrays (vectors), 2-dimensional arrays (matrices), and higher-dimensional arrays.
+
+Efficiency: NumPy arrays are implemented in C, which makes them much more efficient than Python lists, especially for large datasets.
+
+Universal Functions (ufuncs): NumPy provides a large set of mathematical functions that operate element-wise on arrays, known as universal functions or ufuncs. These functions allow for fast computations on arrays without the need for explicit looping in Python.
+
+Indexing and Slicing: NumPy arrays support advanced indexing and slicing operations, similar to Python lists, allowing you to access subsets of the array efficiently.
+
+Broadcasting: NumPy arrays support broadcasting, which is a powerful mechanism that allows arithmetic operations to be performed between arrays of different shapes, often eliminating the need for explicit looping.
+
+Integration with other Libraries: NumPy arrays are used as the standard data structure for exchanging data between different scientific computing libraries in Python, such as SciPy, Pandas, Matplotlib, and scikit-learn.
+
+Here's a simple example of creating a NumPy array and performing some basic operations:
+
+```python
+import numpy as np
+
+# Creating a 1-dimensional NumPy array
+arr1d = np.array([1, 2, 3, 4, 5])
+
+# Creating a 2-dimensional NumPy array
+arr2d = np.array([[1, 2, 3], [4, 5, 6]])
+
+# Accessing elements of an array
+print(arr1d[0])  # Output: 1
+print(arr2d[1, 2])  # Output: 6
+
+# Slicing arrays
+print(arr1d[:3])  # Output: [1 2 3]
+print(arr2d[:, 1:])  # Output: [[2 3]
+                      #          [5 6]]
+
+# Performing arithmetic operations
+result = arr1d * 2
+print(result)  # Output: [ 2  4  6  8 10]
+
+# Broadcasting
+arr3 = np.array([[1], [2], [3]])
+arr4 = np.array([1, 2, 3])
+result = arr3 + arr4
+print(result)  # Output: [[2 3 4]
+               #          [3 4 5]
+               #          [4 5 6]]
+```
+0-D Arrays
+0-D arrays, or Scalars, are the elements in an array. Each value in an array is a 0-D array.
+
+```python
+import numpy as np
+
+arr = np.array(42)
+
+print(arr)
+```
+1-D Arrays
+An array that has 0-D arrays as its elements is called uni-dimensional or 1-D array.
+
+These are the most common and basic arrays.
+```python
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5])
+
+print(arr)
+```
+2-D Arrays
+An array that has 1-D arrays as its elements is called a 2-D array.
+
+These are often used to represent matrix or 2nd order tensors.
+
+NumPy has a whole sub module dedicated towards matrix operations called numpy.mat
+
+```python
+import numpy as np
+
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(arr)
+```
+3-D arrays
+An array that has 2-D arrays (matrices) as its elements is called 3-D array.
+
+These are often used to represent a 3rd order tensor.
+
+```python
+import numpy as np
+
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[1, 2, 3], [4, 5, 6]]])
+
+print(arr)
+```
+NumPy Arrays provides the [ndim] attribute that returns an integer that tells us how many dimensions the array have.
+Negative Indexing
+Use negative indexing to access an array from the end.
+
+```python
+import numpy as np
+
+arr = np.array([[1,2,3,4,5], [6,7,8,9,10]])
+
+print('Last element from 2nd dim: ', arr[1, -1])
+```
+Data Types in NumPy
+NumPy has some extra data types, and refer to data types with one character, like i for integers, u for unsigned integers etc.
+
+Below is a list of all data types in NumPy and the characters used to represent them.
+
+i - integer
+b - boolean
+u - unsigned integer
+f - float
+c - complex float
+m - timedelta
+M - datetime
+O - object
+S - string
+U - unicode string
+V - fixed chunk of memory for other type ( void )
+
+Change data type from float to integer by using 'i' as parameter value:
+```python
+import numpy as np
+
+arr = np.array([1.1, 2.1, 3.1])
+
+newarr = arr.astype('i')
+
+print(newarr)
+print(newarr.dtype)
+```
+
+### Hackerrank Challenge: 
+Q1.The provided code stub will read in a dictionary containing key/value pairs of name:[marks] for a list of students. Print the average of the marks array for the student name provided, showing 2 places after the decimal.
+
+```python
+if __name__ == '__main__':
+    n = int(input())
+    student_marks = {}
+    for _ in range(n):
+        name, *line = input().split()
+        scores = list(map(float, line))
+        student_marks[name] = scores
+    query_name = input()
+    
+    if query_name in student_marks:
+        marks = student_marks[query_name]
+        average = sum(marks) / len(marks)
+        print("{:.2f}".format(average))
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/53acd6a5-872a-4c89-9bb7-c16e1804b154)
+
+Q2. You are given a two lists A and B. Your task is to compute their cartesian product X.
+
+```python
+# Take user input for the first list
+list1 = input().split()
+
+# Take user input for the second list
+list2 = input().split()
+
+# Convert elements to integers
+list1 = [int(x) for x in list1]
+list2 = [int(x) for x in list2]
+
+# Using list comprehension to compute Cartesian product
+cartesian_product = [(x, y) for x in list1 for y in list2]
+
+# Printing each tuple separately
+for pair in cartesian_product:
+    print(pair, end=" ")
+```
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e699cf29-aeda-48f1-b792-24800596ed7d)
