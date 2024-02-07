@@ -709,3 +709,301 @@ for pair in cartesian_product:
     print(pair, end=" ")
 ```
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e699cf29-aeda-48f1-b792-24800596ed7d)
+
+# Day 14: Tree
+A tree represents hierarchical relationships between elements. It consists of nodes connected by edges. Each node contains a value (or data) and references to its child nodes. The topmost node in a tree is called the root node, and nodes with no children are called leaf nodes.
+
+The Tree data structure can be useful in many cases:
+
+Hierarchical Data: File systems, organizational models, etc.
+Databases: Used for quick data retrieval.
+Routing Tables: Used for routing data in network algorithms.
+Sorting/Searching: Used for sorting data and searching for data.
+
+Tree Terminology and Rules:
+
+- The first node in a tree is called the root node.
+- A link connecting one node to another is called an edge.
+- A parent node has links to its child nodes. Another word for a parent node is internal node.
+- A node can have zero, one, or many child nodes.
+- A node can only have one parent node.
+- Nodes without links to other child nodes are called leaves, or leaf nodes.
+- The tree height is the maximum number of edges from the root node to a leaf node. The height of the tree above is 2.
+- The height of a node is the maximum number of edges between the node and a leaf node.
+- The tree size is the number of nodes in the tree.
+
+Types of Trees
+- Binary Trees: Each node has up to two children, the left child node and the right child node. This structure is the foundation for more complex tree types like Binary Search Trees and AVL Trees.
+- Binary Search Trees (BSTs): A type of Binary Tree where for each node, the left child node has a lower value, and the right child node has a higher value.
+- AVL Trees: A type of Binary Search Tree that self-balances so that for every node, the difference in height between the left and right subtrees is at most one. This balance is maintained through rotations when nodes are inserted or deleted.
+
+A binary tree is a hierarchical data structure composed of nodes, where each node has at most two children, referred to as the left child and the right child. The topmost node of the tree is called the root node. In a binary tree, each child node can have a reference to its parent node.
+
+Benefits of Binary Trees over Arrays and Linked Lists:
+
+Arrays are fast when you want to access an element directly, like element number 700 in an array of 1000 elements for example. But inserting and deleting elements require other elements to shift in memory to make place for the new element, or to take the deleted elements place, and that is time consuming.
+Linked Lists are fast when inserting or deleting nodes, no memory shifting needed, but to access an element inside the list, the list must be traversed, and that takes time.
+Binary Trees, such as Binary Search Trees and AVL Trees, are great compared to Arrays and Linked Lists because they are BOTH fast at accessing a node, AND fast when it comes to deleting or inserting a node, with no shifts in memory needed.
+
+Properties of Binary Trees:
+Root Node: The topmost node in a binary tree.
+Parent Node: A node that has child nodes.
+Child Node: A node that is connected to a parent node.
+Leaf Node: A node that does not have any children.
+Internal Node: A node that has at least one child.
+Height: The height of a binary tree is the maximum distance from the root node to a leaf node. The height of an empty tree is considered to be -1.
+Depth (or Level): The depth of a node is the number of edges from the root node to that node.
+Balanced Binary Tree: A binary tree in which the heights of the left and right subtrees of any node differ by at most one.
+Complete Binary Tree: A binary tree in which every level, except possibly the last, is completely filled, and all nodes are as far left as possible.
+Full Binary Tree: A binary tree in which every node has either zero or two children.
+Perfect Binary Tree: A binary tree in which all internal nodes have exactly two children, and all leaf nodes are at the same level.
+Binary Search Tree (BST): A binary tree in which the value of each node in the left subtree is less than the value of the node itself, and the value of each node in the right subtree is greater than the value of the node itself.
+
+```python
+class TreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.children = []
+
+    def add_child(self, child_node):
+        self.children.append(child_node)
+
+# Example usage:
+if __name__ == "__main__":
+    # Create nodes
+    root = TreeNode("A")
+    node_b = TreeNode("B")
+    node_c = TreeNode("C")
+    node_d = TreeNode("D")
+    node_e = TreeNode("E")
+    node_f = TreeNode("F")
+
+    # Connect nodes
+    root.add_child(node_b)
+    root.add_child(node_c)
+    node_b.add_child(node_d)
+    node_b.add_child(node_e)
+    node_c.add_child(node_f)
+
+    # Print the tree structure
+    def print_tree(node, level=0):
+        print("  " * level + str(node.data))
+        if node.children:
+            for child in node.children:
+                print_tree(child, level + 1)
+
+    print_tree(root)
+#Output
+#A
+#  B
+#    D
+#    E
+#  C
+#    F
+```
+Binary Tree Traversal
+Going through a Tree by visiting every node, one node at a time, is called traversal.
+
+Since Arrays and Linked Lists are linear data structures, there is only one obvious way to traverse these: start at the first element, or node, and continue to visit the next until you have visited them all.
+
+But since a Tree can branch out in different directions (non-linear), there are different ways of traversing Trees.
+
+There are two main categories of Tree traversal methods:
+
+Breadth First Search (BFS) is when the nodes on the same level are visited before going to the next level in the tree. This means that the tree is explored in a more sideways direction.
+
+Depth First Search (DFS) is when the traversal moves down the tree all the way to the leaf nodes, exploring the tree branch by branch in a downwards direction.
+
+There are three different types of DFS traversals:
+
+pre-order
+```python
+def preOrderTraversal(node):
+    if node is None:
+        return
+    print(node.data, end=", ")
+    preOrderTraversal(node.left)
+    preOrderTraversal(node.right)
+```
+in-order
+```python
+def inOrderTraversal(node):
+    if node is None:
+        return
+    inOrderTraversal(node.left)
+    print(node.data, end=", ")
+    inOrderTraversal(node.right)
+```
+post-order
+```python
+def postOrderTraversal(node):
+    if node is None:
+        return
+    postOrderTraversal(node.left)
+    postOrderTraversal(node.right)
+    print(node.data, end=", ")
+```
+Binary Search tree:
+A Binary Search Tree (BST) is a type of Binary Tree data structure, where the following properties must be true for any node "X" in the tree:
+
+The X node's left child and all of its descendants (children, children's children, and so on) have lower values than X's value.
+The right child, and all its descendants have higher values than X's value.
+Left and right subtrees must also be Binary Search Trees.
+
+Operations on Binary Search Trees:
+Insertion: To insert a new node into a BST, you compare the value of the new node with the value of the current node. If it's less, you move to the left subtree; if it's greater, you move to the right subtree. This process continues until you find an appropriate empty spot to insert the new node.
+Deletion: Deleting a node from a BST can be a bit more complex. There are several cases to consider:
+If the node to be deleted has no children, you can simply remove it from the tree.
+If the node has one child, you can replace the node with its child.
+If the node has two children, you can either replace it with the minimum value node from its right subtree (or the maximum value node from its left subtree), or you can swap it with its successor (or predecessor) in the tree and then delete that successor node.
+Search: To search for a value in a BST, you start at the root node and compare the target value with the current node's value. If they match, you've found the node. If the target value is less than the current node's value, you move to the left subtree; if it's greater, you move to the right subtree. This process continues recursively until you find the node with the target value or reach a leaf node.
+Traversal: There are three primary ways to traverse a BST:
+Inorder Traversal: Traverse the left subtree, visit the node, then traverse the right subtree. This results in a sorted list if the BST is balanced.
+Preorder Traversal: Visit the node, then traverse the left and right subtrees.
+Postorder Traversal: Traverse the left and right subtrees, then visit the node.
+Complexity of Operations:
+Search: The time complexity of searching in a BST is O(h), where h is the height of the tree. In a balanced BST, the height is logarithmic (O(log n)), where n is the number of nodes. However, in the worst-case scenario (when the tree is highly unbalanced), the height can be linear (O(n)), resulting in degraded performance.
+Insertion and Deletion: Both operations require a search first, so their time complexity is also O(h). However, if rebalancing is necessary to maintain the BST property, additional operations may be required, resulting in a time complexity of O(log n) in balanced trees.
+
+
+Benefits of Binary Search Trees:
+Efficient Search: BSTs provide efficient searching due to their ordered structure, especially when the tree is balanced.
+
+Dynamic Operations: BSTs allow dynamic insertion and deletion of nodes, making them suitable for applications with frequently changing data.
+
+Simple Structure: BSTs have a simple and intuitive structure, making them easy to implement and understand.
+
+
+Limitations of Binary Search Trees:
+Degraded Performance: Unbalanced BSTs can lead to degraded performance, with search, insertion, and deletion operations taking linear time in the worst-case scenario.
+
+Memory Consumption: The memory usage of a BST can grow significantly if the tree becomes unbalanced, potentially leading to inefficient use of memory resources.
+
+```python
+class TreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def inOrderTraversal(node):
+    if node is None:
+        return
+    inOrderTraversal(node.left)
+    print(node.data, end=", ")
+    inOrderTraversal(node.right)
+
+root = TreeNode(13)
+node7 = TreeNode(7)
+node15 = TreeNode(15)
+node3 = TreeNode(3)
+node8 = TreeNode(8)
+node14 = TreeNode(14)
+node19 = TreeNode(19)
+node18 = TreeNode(18)
+
+root.left = node7
+root.right = node15
+
+node7.left = node3
+node7.right = node8
+
+node15.left = node14
+node15.right = node19
+
+node19.left = node18
+
+# Traverse
+inOrderTraversal(root)
+```
+
+AVL Tree:
+
+An AVL tree is a self-balancing binary search tree named after its inventors, Adelson-Velsky and Landis. It maintains a strict balance criterion to ensure efficient insertion, deletion, and search operations with a guaranteed worst-case time complexity of O(log n), where n is the number of nodes in the tree. The balance criterion is based on the height difference (also known as the balance factor) between the left and right subtrees of any node.
+
+
+Properties of AVL Trees:
+Balance Factor: For any node in an AVL tree, the height of its left subtree and the height of its right subtree differ by at most 1.
+Height: The height of an AVL tree is the maximum depth of any node in the tree. The height of an empty tree is considered -1.
+Balanced Subtrees: In an AVL tree, all subtrees rooted at any node also satisfy the balance factor property.
+Self-Balancing: After insertion or deletion of a node, AVL trees automatically perform rotations to maintain balance if necessary.
+
+
+AVL Tree Rotations:
+AVL trees use rotations to restore balance when it is violated due to insertion or deletion operations. There are four possible rotations:
+Left Rotation: A rotation performed to restore balance when the right subtree is taller than the left subtree by more than one level.
+Right Rotation: A rotation performed to restore balance when the left subtree is taller than the right subtree by more than one level.
+Left-Right Rotation (LR Rotation): A combination of left rotation followed by right rotation used to balance the tree.
+Right-Left Rotation (RL Rotation): A combination of right rotation followed by left rotation used to balance the tree.
+Operations on AVL Trees:
+Insertion: After inserting a new node, AVL trees check the balance factor of each node and perform rotations if necessary to restore balance.
+Deletion: After deleting a node, AVL trees check the balance factor of each node and perform rotations if necessary to restore balance.
+Search: Searching for a node with a given key in the AVL tree follows the same logic as in binary search trees with O(log n) time complexity.
+Traversal: Inorder, preorder, and postorder traversal methods are applicable to AVL trees, providing access to all nodes in sorted order.
+Height Calculation: AVL trees provide a height-balanced structure, ensuring that the height of the tree remains logarithmic.
+
+
+Benefits of AVL Trees:
+Efficiency: AVL trees offer efficient operations, ensuring O(log n) time complexity for insertion, deletion, and search operations.
+Self-Balancing: AVL trees automatically adjust their structure to maintain balance, reducing the risk of performance degradation.
+Predictability: The balance criterion of AVL trees ensures predictable performance characteristics, making them suitable for applications with strict performance requirements.
+
+
+Limitations of AVL Trees:
+Overhead: Maintaining balance in AVL trees requires additional overhead in terms of extra bookkeeping and rotations, impacting memory usage and performance.
+Complexity: The implementation of AVL trees, especially rotation algorithms, can be more complex compared to simpler data structures like binary search trees.
+
+
+### Hackerrank Challenge:
+Q1. Consider a list (list = []). You can perform the following commands:
+
+insert i e: Insert integer  at position .
+print: Print the list.
+remove e: Delete the first occurrence of integer .
+append e: Insert integer  at the end of the list.
+sort: Sort the list.
+pop: Pop the last element from the list.
+reverse: Reverse the list.
+Initialize your list and read in the value of  followed by  lines of commands where each command will be of the  types listed above. Iterate through each command in order and perform the corresponding operation on your list.
+
+```python
+if __name__ == '__main__':
+    N = int(input())
+    lst = []
+
+    for _ in range(N):
+        command = input().split()
+
+        if command[0] == 'insert':
+            lst.insert(int(command[1]), int(command[2]))
+        elif command[0] == 'print':
+            print(lst)
+        elif command[0] == 'remove':
+            lst.remove(int(command[1]))
+        elif command[0] == 'append':
+            lst.append(int(command[1]))
+        elif command[0] == 'sort':
+            lst.sort()
+        elif command[0] == 'pop':
+            lst.pop()
+        elif command[0] == 'reverse':
+            lst.reverse()
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/47cf4689-f1e3-4ab6-9413-bb1a42b8ac53)
+
+Q2. Given an integer, n, and  n space-separated integers as input, create a tuple,t , of those n integers. Then compute and print the result of hash(t).
+```python
+n = int(input())
+integer_list = map(int, input().split())
+
+t = tuple(integer_list)
+result = hash(t)
+
+print(result)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/cffab12e-ef0b-4928-a19a-fc6eeee8b7a5)
+
+
+
