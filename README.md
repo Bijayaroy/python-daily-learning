@@ -867,55 +867,18 @@ Insertion and Deletion: Both operations require a search first, so their time co
 
 
 Benefits of Binary Search Trees:
+
+
 Efficient Search: BSTs provide efficient searching due to their ordered structure, especially when the tree is balanced.
-
 Dynamic Operations: BSTs allow dynamic insertion and deletion of nodes, making them suitable for applications with frequently changing data.
-
 Simple Structure: BSTs have a simple and intuitive structure, making them easy to implement and understand.
 
 
 Limitations of Binary Search Trees:
+
+
 Degraded Performance: Unbalanced BSTs can lead to degraded performance, with search, insertion, and deletion operations taking linear time in the worst-case scenario.
-
 Memory Consumption: The memory usage of a BST can grow significantly if the tree becomes unbalanced, potentially leading to inefficient use of memory resources.
-
-```python
-class TreeNode:
-    def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
-
-def inOrderTraversal(node):
-    if node is None:
-        return
-    inOrderTraversal(node.left)
-    print(node.data, end=", ")
-    inOrderTraversal(node.right)
-
-root = TreeNode(13)
-node7 = TreeNode(7)
-node15 = TreeNode(15)
-node3 = TreeNode(3)
-node8 = TreeNode(8)
-node14 = TreeNode(14)
-node19 = TreeNode(19)
-node18 = TreeNode(18)
-
-root.left = node7
-root.right = node15
-
-node7.left = node3
-node7.right = node8
-
-node15.left = node14
-node15.right = node19
-
-node19.left = node18
-
-# Traverse
-inOrderTraversal(root)
-```
 
 AVL Tree:
 
