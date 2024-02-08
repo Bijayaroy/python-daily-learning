@@ -474,7 +474,7 @@ for i in range (0,len(li2)):
 #Output
 #The new list created is : 1 2 3 1 2 5 
 ```
-# Day 11: Strings
+## Day 11: Strings
 In Python, a string is a sequence of characters enclosed within single quotes (' '), double quotes (" "), or triple quotes (''' ''' or """ """). 
 
 Strings are immutable, meaning that once they are created, their values cannot be changed.
@@ -528,7 +528,7 @@ Split String: The split() method returns a list where the text between the speci
 a = "Hello, World!"
 print(a.split(",")) # returns ['Hello', ' World!']
 ```
-# Day 13 : Numpy array
+## Day 13 : Numpy array
 
 NumPy arrays are a fundamental data structure in the NumPy library, which is a popular Python library used for numerical computing. NumPy arrays provide a way to store and manipulate large arrays of numerical data efficiently.
 
@@ -710,7 +710,7 @@ for pair in cartesian_product:
 ```
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e699cf29-aeda-48f1-b792-24800596ed7d)
 
-# Day 14: Tree
+## Day 14: Tree
 A tree represents hierarchical relationships between elements. It consists of nodes connected by edges. Each node contains a value (or data) and references to its child nodes. The topmost node in a tree is called the root node, and nodes with no children are called leaf nodes.
 
 The Tree data structure can be useful in many cases:
@@ -968,5 +968,293 @@ print(result)
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/cffab12e-ef0b-4928-a19a-fc6eeee8b7a5)
 
+## Day 15 : Trees (contd.)
+
+#### B-Tree:
+Definition:
+
+A B-tree is a self-balancing tree data structure designed to store and manage large amounts of data efficiently in secondary storage such as disks.
+It was invented by Rudolf Bayer and Edward McCreight in 1972 as a generalization of binary search trees.
+Properties:
+
+In a B-tree, each node can contain a variable number of keys and pointers to child nodes.
+The keys within a node are stored in sorted order, facilitating efficient search operations.
+All leaf nodes are at the same level, which ensures balanced access to data across the entire tree.
+B-trees are characterized by a parameter B, known as the "order" of the tree, which determines the maximum number of children a node can have.
+A B-tree must satisfy certain properties, including the minimum degree requirement, which ensures that nodes have a minimum number of keys.
+Operations:
+
+Search: Similar to binary search trees, searching in a B-tree follows a recursive process, navigating through the tree based on the comparison of keys.
+Insertion: Inserting a new key into a B-tree involves finding the appropriate position for the key and inserting it while maintaining the sorted order of keys within nodes.
+Deletion: Deleting a key from a B-tree requires locating the key, removing it from the node, and potentially rebalancing the tree to maintain its properties.
+Applications:
+
+B-trees are widely used in databases and file systems for indexing and managing large datasets efficiently.
+They are suitable for scenarios where data is stored on disk and must be accessed in blocks or pages.
+#### B+ Tree:
+Definition:
+
+A B+ tree is a variation of the B-tree that enhances its structure for efficient range queries and sequential access.
+It was introduced by Rudolf Bayer and Edward McCreight in 1972 and later popularized by Douglas Comer.
+Properties:
+
+Like a B-tree, a B+ tree consists of internal nodes and leaf nodes, with keys stored only in the leaf nodes.
+All leaf nodes are linked together in a linked list, enabling efficient range queries and sequential access.
+Internal nodes in a B+ tree act as index nodes, containing pointers to child nodes and dividing keys to guide searches.
+Advantages:
+
+B+ trees offer improved performance for range queries and sequential access due to the linked list structure of leaf nodes.
+They are well-suited for database systems where range queries are common, such as retrieving all records within a specified range or performing range-based joins.
+Operations:
+
+The basic operations of insertion, deletion, and search in a B+ tree are similar to those in a B-tree.
+Insertion and deletion may require additional operations to maintain the linked list structure of leaf nodes.
+Applications:
+
+B+ trees are widely used in database systems as indexing structures for efficient retrieval of data within a range.
+They are also employed in file systems and operating systems for managing large files and directories efficiently.
+General Tree (Inserting,Deleting,BFS and DFS):
+
+```python
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+def insert_node(root, value):
+    new_node = TreeNode(value)
+    root.children.append(new_node)
+
+def delete_node(root, value):
+    for child in root.children:
+        if child.value == value:
+            root.children.remove(child)
+            return
+        delete_node(child, value)
+
+def bfs(root):
+    queue = [root]
+    traversal = []
+    while queue:
+        node = queue.pop(0)
+        traversal.append(node.value)
+        for child in node.children:
+            queue.append(child)
+    return traversal
+
+def dfs(root):
+    traversal = []
+    traversal.append(root.value)
+    for child in root.children:
+        traversal.extend(dfs(child))
+    return traversal
+
+# Example Usage
+root = TreeNode(1)
+insert_node(root, 2)
+insert_node(root, 3)
+insert_node(root.children[0], 4)
+insert_node(root.children[0], 5)
+
+print("BFS Traversal:", bfs(root))
+print("DFS Traversal:", dfs(root))
+```
+Binary Tree :
+```python
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def insert_node(root, value):
+    if root is None:
+        return TreeNode(value)
+    else:
+        if value <= root.value:
+            root.left = insert_node(root.left, value)
+        else:
+            root.right = insert_node(root.right, value)
+    return root
+
+def delete_node(root, value):
+    if root is None:
+        return root
+    if value < root.value:
+        root.left = delete_node(root.left, value)
+    elif value > root.value:
+        root.right = delete_node(root.right, value)
+    else:
+        if root.left is None:
+            return root.right
+        elif root.right is None:
+            return root.left
+        root.value = find_min_value(root.right)
+        root.right = delete_node(root.right, root.value)
+    return root
+
+def find_min_value(root):
+    min_value = root.value
+    while root.left is not None:
+        min_value = root.left.value
+        root = root.left
+    return min_value
+
+def bfs(root):
+    queue = [root]
+    traversal = []
+    while queue:
+        node = queue.pop(0)
+        traversal.append(node.value)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+    return traversal
+
+def dfs_inorder(root):
+    if root is None:
+        return []
+    return dfs_inorder(root.left) + [root.value] + dfs_inorder(root.right)
+
+# Example Usage
+root = None
+root = insert_node(root, 10)
+root = insert_node(root, 5)
+root = insert_node(root, 15)
+root = insert_node(root, 3)
+root = insert_node(root, 7)
+root = insert_node(root, 12)
+root = insert_node(root, 18)
+
+print("BFS Traversal:", bfs(root))
+print("DFS Inorder Traversal:", dfs_inorder(root))
+```
+
+Binary Search Tree:
+```python
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def insert_node(root, value):
+    if root is None:
+        return TreeNode(value)
+    else:
+        if value <= root.value:
+            root.left = insert_node(root.left, value)
+        else:
+            root.right = insert_node(root.right, value)
+    return root
+
+def delete_node(root, value):
+    if root is None:
+        return root
+    if value < root.value:
+        root.left = delete_node(root.left, value)
+    elif value > root.value:
+        root.right = delete_node(root.right, value)
+    else:
+        if root.left is None:
+            return root.right
+        elif root.right is None:
+            return root.left
+        root.value = find_min_value(root.right)
+        root.right = delete_node(root.right, root.value)
+    return root
+
+def find_min_value(root):
+    min_value = root.value
+    while root.left is not None:
+        min_value = root.left.value
+        root = root.left
+    return min_value
+
+def bfs(root):
+    queue = [root]
+    traversal = []
+    while queue:
+        node = queue.pop(0)
+        traversal.append(node.value)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+    return traversal
+
+def dfs_inorder(root):
+    if root is None:
+        return []
+    return dfs_inorder(root.left) + [root.value] + dfs_inorder(root.right)
+
+# Example Usage
+root = None
+root = insert_node(root, 10)
+root = insert_node(root, 5)
+root = insert_node(root, 15)
+root = insert_node(root, 3)
+root = insert_node(root, 7)
+root = insert_node(root, 12)
+root = insert_node(root, 18)
+
+print("BFS Traversal:", bfs(root))
+print("DFS Inorder Traversal:", dfs_inorder(root))
+```
+
+### Top Questions related to Trees:
+- Maximum Depth of Binary Tree
+- Check if two trees have same structure
+- Invert/Flip Binary Tree
+- Binary Tree Maximum Path Sum
+- Binary Tree Level Order Traversal
+- Serialize and Deserialize Binary Tree
+- Subtree of Another Tree
+- Construct Binary Tree from Preorder and Inorder Traversal
+- Validate Binary Search Tree
+- Kth Smallest Element in a BST
+- Lowest Common Ancestor of BST
+- Implement Trie (Prefix Tree)
+- Add and Search Word
+
+### Hackerrank Challenge:
+Q1. You are given a string and your task is to swap cases. In other words, convert all lowercase letters to uppercase letters and vice versa.
+```python
+def swap_case(s):
+    swapped_string = ""
+    for char in s:
+        if char.isupper():
+            swapped_string += char.lower()
+        else:
+            swapped_string += char.upper()
+    return swapped_string
+
+if __name__ == '__main__':
+    s = input()
+    result = swap_case(s)
+    print(result)
+```
+Output:
+
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/1898685d-abaa-4a2a-83f5-0086b1de668e)
+
+Q2. You are given a string. Split the string on a " " (space) delimiter and join using a - hyphen.
+
+```python
+def split_and_join(line):
+    # Split the input string based on whitespace
+    split_line = line.split()
+    # Join the split parts using a hyphen as the delimiter
+    joined_line = "-".join(split_line)
+    return joined_line
+
+if __name__ == '__main__':
+    line = input()
+    result = split_and_join(line)
+    print(result)
+```
+Output:
 
 
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/84d246e6-3950-4fb0-848d-47a01e839648)
