@@ -1013,6 +1013,8 @@ Applications:
 
 B+ trees are widely used in database systems as indexing structures for efficient retrieval of data within a range.
 They are also employed in file systems and operating systems for managing large files and directories efficiently.
+
+
 General Tree (Inserting,Deleting,BFS and DFS):
 
 ```python
