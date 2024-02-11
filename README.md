@@ -1260,3 +1260,256 @@ Output:
 
 
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/84d246e6-3950-4fb0-848d-47a01e839648)
+
+## Day 16 : Array (Revision): 
+TOP QUESTIONS IN ARRAY:
+Q1. Find a peak element which is not smaller than its neighbours. Given an array arr of n elements that is first strictly increasing and then maybe strictly decreasing, find the maximum element in the array.
+
+Note: If the array is increasing then just print the last element will be the maximum value.
+```python
+def findPeak(arr,n):
+    #If an array has just one element
+    if(n==1):
+        return 0
+    #If the array is in increasing order, just check the first element is greater or not
+    if(arr[0]>=arr[1]):
+        return 0
+    #If the array is in decreasing order, just check the last element is greater or not
+    if(arr[n-1]>=arr[n-2]):
+        return n-1
+    #for the rest of the elemnts if there is an increasing and decreasing combination in the array
+    for i in range(1, n-1):
+        if(arr[i]>=arr[i-1] and arr[i]>=arr[i+1]):
+            return i
+        
+arr=[]
+n=int(input("Enter the number of elements in the array: "))
+for i in range(0, n):
+    e=int(input("Enter element {}:".format(i+1)))
+    arr.append(e)
+print("Index of peak-point is: ",findPeak(arr,n)+1)
+```
+Output:
+```
+Enter the number of elements in the array: 6
+Enter element 1:1
+Enter element 2:3
+Enter element 3:20
+Enter element 4:4
+Enter element 5:1
+Enter element 6:0
+Index of peak-point is:  3
+```
+Q2. Program to find the minimum (or maximum) element of an array Given an array, write functions to find the minimum and maximum elements in it.
+
+```python
+def minimum(arr,n):
+    min_value = arr[0]
+    for i in range (1, n):
+        if(min_value>=arr[i]):
+            min_value=arr[i]
+    return min_value
+
+def maximum(arr,n):
+    max_value = arr[0]
+    for i in range (1, n):
+        if(max_value<=arr[i]):
+            max_value=arr[i]
+    return max_value
+
+arr=[]
+n=int(input("Enter the number of elements in the array: "))
+for i in range(0, n):
+    e=int(input("Enter element {}:".format(i+1)))
+    arr.append(e)
+print("Maximum Value:",maximum(arr,n))
+print("Minimum Value:",minimum(arr,n))
+```
+Output:
+```
+Enter the number of elements in the array: 6
+Enter element 1:5
+Enter element 2:3
+Enter element 3:7
+Enter element 4:2
+Enter element 5:6
+Enter element 6:8
+Maximum Value: 8
+Minimum Value: 2
+```
+Q3. Given an array (or string), the task is to reverse the array/string.
+```python
+def reverse(arr, start, end):
+    while(start<=end):
+        arr[start], arr[end]= arr[end], arr[start]
+        start+=1
+        end-=1
+    return arr
+
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+print("The reversed array : ",reverse(arr,0,n-1)) 
+```
+Output:
+```
+Enter the number of elements in an array : 6
+Enter element 1: 5
+Enter element 2: 3
+Enter element 3: 4
+Enter element 4: 8
+Enter element 5: 2
+Enter element 6: 44
+The reversed array :  [44, 2, 8, 4, 3, 5]
+```
+Q4. Write a program to sort a given array(in ascending order)
+```python
+def sort(arr,n):
+    for i in range(0,n):
+        min_e=i
+        for j in range(i+1,n):
+            if(arr[min_e]>arr[j]):
+                min_e=j
+        arr[min_e],arr[i]=arr[i],arr[min_e]
+    return arr
+
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+print("The sorted array : ",sort(arr,n)) 
+```
+Output:
+```
+Enter the number of elements in an array : 6
+Enter element 1: 4
+Enter element 2: 7
+Enter element 3: 3
+Enter element 4: 5
+Enter element 5: 8
+Enter element 6: 2
+The sorted array :  [2, 3, 4, 5, 7, 8]
+```
+Q5. Find K-th smallest/largest element in the array
+```python
+def ksmall(arr,n):
+    for i in range(0,n):
+        min_e=i
+        for j in range(i+1,n):
+            if(arr[min_e]>arr[j]):
+                min_e=j
+        arr[min_e],arr[i]=arr[i],arr[min_e]
+    return arr[k-1]
+
+def klarge(arr,n):
+    for i in range(0,n):
+        min_e=i
+        for j in range(i+1,n):
+            if(arr[min_e]>arr[j]):
+                min_e=j
+        arr[min_e],arr[i]=arr[i],arr[min_e]
+    return arr[n-k]
+
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+k=int(input("Enter the value of k: "))
+print("The {}th smallest element :".format(k))
+print(ksmall(arr,n))
+print("The {}th largest element :".format(k))
+print(klarge(arr,n))
+Enter the number of elements in an array : 6
+```
+Output:
+```
+Enter element 1: 2
+Enter element 2: 3
+Enter element 3: 5
+Enter element 4: 4
+Enter element 5: 7
+Enter element 6: 8
+Enter the value of k: 2
+The 2th smallest element :
+3
+The 2th largest element :
+7
+```
+Q6. Count number of occurrences (or frequency) in a sorted array
+
+Examples: Input: arr[] = {1, 1, 2, 2, 2, 2, 3,}, x = 2 Output: 4 // x (or 2) occurs 4 times in arr[] Input: arr[] = {1, 1, 2, 2, 2, 2, 3,}, x = 3 Output: 1 Input: arr[] = {1, 1, 2, 2, 2, 2, 3,}, x = 1 Output: 2 Input: arr[] = {1, 1, 2, 2, 2, 2, 3,}, x = 4 Output: -1 // 4 doesn't occur in arr[]
+```python
+def occurence(arr,n,x):
+    oc=0
+    for i in range (0,n):
+        if(arr[i]==x):
+            oc+=1
+    return oc
+
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+x=int(input("Enter the value of x for which the occurence is to be calculated: "))
+print("Number of occurences : ",occurence(arr,n,x))
+```
+Output:
+```
+Enter the number of elements in an array : 6
+Enter element 1: 1
+Enter element 2: 3
+Enter element 3: 3
+Enter element 4: 4
+Enter element 5: 4
+Enter element 6: 4
+Enter the value of x for which the occurence is to be calculated: 4
+Number of occurences : 3
+```
+Q7. Given an array A[] consisting of only 0s, 1s, and 2s. The task is to write a function that sorts the given array. The functions should put all 0s first, then all 1s and all 2s in last.
+
+This problem is also the same as the famous “Dutch National Flag problem”. The problem was proposed by Edsger Dijkstra. The problem is as follows:
+
+Given N balls of colour red, white or blue arranged in a line in random order. You have to arrange all the balls such that the balls with the same colours are adjacent with the order of the balls, with the order of the colours being red, white and blue (i.e., all red coloured balls come first then the white coloured balls and then the blue coloured balls).
+```python
+def sort012(arr):
+    l=0
+    m=0
+    h=n-1
+    while(m<=h):
+        #if arr[m] is equal to 0
+        if(arr[m]==0):
+            arr[l],arr[m]=arr[m],arr[l]
+            l+=1
+            m+=1
+        #if arr[m] is equal to 1
+        elif(arr[m]==1):
+            m+=1
+        #if arr[m] is equal to 2
+        else:
+            arr[m],arr[h]=arr[h],arr[m]
+            h-=1
+    return arr
+
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+print("Sorted array : ",sort012(arr))
+```
+Output:
+```
+Enter the number of elements in an array : 6
+Enter element 1: 0
+Enter element 2: 1
+Enter element 3: 2
+Enter element 4: 0
+Enter element 5: 1
+Enter element 6: 2
+Sorted array :  [0, 0, 1, 1, 2, 2]
+```
