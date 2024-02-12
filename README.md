@@ -1513,3 +1513,112 @@ Enter element 5: 1
 Enter element 6: 2
 Sorted array :  [0, 0, 1, 1, 2, 2]
 ```
+### Hackerrank Challenge:
+Q1. You are given the firstname and lastname of a person on two different lines. Your task is to read them and print the following:
+
+Hello firstname lastname! You just delved into python.
+
+```python
+def print_full_name(first, last):
+    # Print the message
+    print("Hello", first, last + "!", "You just delved into python.")
+
+
+if __name__ == '__main__':
+    first_name = input()
+    last_name = input()
+    print_full_name(first_name, last_name)
+```
+
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/239ac5dc-b51c-4580-89ca-795c7bd54241)
+
+Q2. We have seen that lists are mutable (they can be changed), and tuples are immutable (they cannot be changed).
+
+Let's try to understand this with an example.
+
+You are given an immutable string, and you want to make changes to it.
+
+```python
+def mutate_string(string, position, character):
+    # Convert the string to a list to allow modifications
+    string_list = list(string)
+    
+    # Replace the character at the specified position
+    string_list[position] = character
+    
+    # Convert the list back to a string and return it
+    return ''.join(string_list)
+
+if __name__ == '__main__':
+    s = input()
+    i, c = input().split()
+    s_new = mutate_string(s, int(i), c)
+    print(s_new)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e17d3fdf-b75b-4d1f-acac-5838a04276d2)
+
+# Day 17: Trees and Array Revision(contd.)
+### Hackerrank Challenge:
+Q1. In this challenge, the user enters a string and a substring. You have to print the number of times that the substring occurs in the given string. String traversal will take place from left to right, not from right to left.
+
+NOTE: String letters are case-sensitive.
+```python
+def count_substring(string, substring):
+    count = 0
+    sub_len = len(substring)
+    for i in range(len(string) - sub_len + 1):
+        if string[i:i+sub_len] == substring:
+            count += 1
+    return count
+
+
+if __name__ == '__main__':
+    string = input().strip()
+    sub_string = input().strip()
+    
+    count = count_substring(string, sub_string)
+    print(count)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/b7059341-8917-40e3-be3a-90f0ae5a1edf)
+
+Q2. You are given a string S .
+Your task is to find out if the string S contains: alphanumeric characters, alphabetical characters, digits, lowercase and uppercase characters.
+
+```python
+def analyze_string(S):
+    is_alphanumeric = False
+    is_alphabetical = False
+    is_digits = False
+    is_lowercase = False
+    is_uppercase = False
+
+    for char in S:
+        if char.isalnum():
+            is_alphanumeric = True
+        if char.isalpha():
+            is_alphabetical = True
+        if char.isdigit():
+            is_digits = True
+        if char.islower():
+            is_lowercase = True
+        if char.isupper():
+            is_uppercase = True
+
+    return is_alphanumeric, is_alphabetical, is_digits, is_lowercase, is_uppercase
+
+
+if __name__ == '__main__':
+    s = input()
+    alphanumeric, alphabetical, digits, lowercase, uppercase = analyze_string(s)
+
+    print(alphanumeric)
+    print(alphabetical)
+    print(digits)
+    print(lowercase)
+    print(uppercase)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a9cf7464-f534-4a8d-aaee-d81628be555e)
