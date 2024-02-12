@@ -1559,7 +1559,185 @@ if __name__ == '__main__':
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e17d3fdf-b75b-4d1f-acac-5838a04276d2)
 
-# Day 17: Trees and Array Revision(contd.)
+## Day 17: Array Revision(contd.)
+Q8. Given an array arr[] of non-negative integers and an integer sum, find a subarray that adds to a given sum. Note: There may be more than one subarray with sum as the given sum, print first such subarray.
+
+Examples: Input: arr[] = {1, 4, 20, 3, 10, 5}, sum = 33 Output: Sum found between indexes 2 and 4 Explanation: Sum of elements between indices 2 and 4 is 20 + 3 + 10 = 33
+```python
+def subarray(arr,n,s):
+    currentsum=arr[0]
+    start=0
+    i=1
+    while(i<=n):
+        while currentsum>s and start<=i-1:
+            currentsum-=arr[start]
+            start+=1
+        if(currentsum==s):
+            print("Sum found between indexes", start+1," and ",i)
+            return 1
+        if i<=n:
+            currentsum+=arr[i]
+        i+=1
+    print("No subarray found")
+    return 0
+    
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+s=int(input("Enter the value of sum : "))
+subarray(arr,n,s)   
+```
+```
+Enter the number of elements in an array : 6
+Enter element 1: 1
+Enter element 2: 2
+Enter element 3: 3
+Enter element 4: 4
+Enter element 5: 5
+Enter element 6: 9
+Enter the value of sum : 7
+Sum found between indexes 3  and  4
+1
+```
+Q9. Move all negative numbers to beginning and positive to end with constant extra space
+```python
+def reArrange(arr, n): 
+    low,high = 0, n - 1
+    while(low<high): 
+        if(arr[low] < 0): 
+            low += 1
+        elif(arr[high] > 0): 
+            high -= 1
+        else: 
+            arr[low],arr[high] = arr[high],arr[low] 
+  
+def displayArray(arr, n): 
+  
+    for i in range(n): 
+        print(arr[i],end = " ") 
+    
+    print('') 
+    
+    
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+reArrange(arr,n)
+displayArray(arr,n)
+```
+```
+Enter the number of elements in an array : 6
+Enter element 1: 1
+Enter element 2: -1
+Enter element 3: 2
+Enter element 4: 4
+Enter element 5: -3
+Enter element 6: 5
+-3 -1 2 4 1 5 
+```
+Q10. Given two sorted arrays, find their union and intersection.
+
+Example:
+
+Input: arr1[] = {1, 3, 4, 5, 7} arr2[] = {2, 3, 5, 6} Output: Union : {1, 2, 3, 4, 5, 6, 7} Intersection : {3, 5}
+
+Input: arr1[] = {2, 5, 6} arr2[] = {4, 6, 8, 10} Output: Union : {2, 4, 5, 6, 8, 10} Intersection : {6}
+```python
+def find_union_and_intersection(arr1, arr2):
+    m = len(arr1)
+    n = len(arr2)
+    union = []
+    intersection = []
+    i = 0
+    j = 0
+
+    while i < m and j < n:
+        if arr1[i] == arr2[j]:
+            intersection.append(arr1[i])
+            union.append(arr1[i])
+            i += 1
+            j += 1
+        elif arr1[i] < arr2[j]:
+            union.append(arr1[i])
+            i += 1
+        else:
+            union.append(arr2[j])
+            j += 1
+
+    # Add remaining elements of arr1 and arr2 to union
+    while i < m:
+        union.append(arr1[i])
+        i += 1
+    while j < n:
+        union.append(arr2[j])
+        j += 1
+
+    return union, intersection
+
+#Take user input for the arrays
+arr1 = list(map(int, input("Enter the first sorted array elements separated by space: ").split()))
+arr2 = list(map(int, input("Enter the second sorted array elements separated by space: ").split()))
+
+#Call the function and print the results
+union, intersection = find_union_and_intersection(arr1, arr2)
+print("Union:", union)
+print("Intersection:", intersection)
+Enter the first sorted array elements separated by space: 1 2 3 4
+Enter the second sorted array elements separated by space: 3 4 5
+```
+```
+Union: [1, 2, 3, 4, 5]
+Intersection: [3, 4]
+```
+Q11. Given an array, the task is to cyclically rotate the array clockwise by one time.
+
+Examples:
+
+Input: arr[] = {1, 2, 3, 4, 5} Output: arr[] = {5, 1, 2, 3, 4}
+
+Input: arr[] = {2, 3, 4, 5, 1} Output: {1, 2, 3, 4, 5}
+```python
+def rotate(arr, n):
+    last_el = arr[n - 1]
+ 
+    for i in range(n - 1, 0, -1):
+        arr[i] = arr[i - 1]
+ 
+    arr[0] = last_el
+ 
+ 
+n=int(input("Enter the number of elements in an array : "))
+arr=[]
+for i in range(0,n):
+    e=int(input("Enter element {}: ".format(i+1)))
+    arr.append(e)
+print("Given array is :")
+for i in range(0, n):
+    print(arr[i], end=' ')
+ 
+rotate(arr, n)
+ 
+print("\nRotated array is :")
+for i in range(0, n):
+    print(arr[i], end=' ')
+```
+```
+Enter the number of elements in an array : 6
+Enter element 1: 1
+Enter element 2: 4
+Enter element 3: 5
+Enter element 4: 2
+Enter element 5: 3
+Enter element 6: 8
+Given array is :
+1 4 5 2 3 8 
+Rotated array is :
+8 1 4 5 2 3 
+```
 ### Hackerrank Challenge:
 Q1. In this challenge, the user enters a string and a substring. You have to print the number of times that the substring occurs in the given string. String traversal will take place from left to right, not from right to left.
 
