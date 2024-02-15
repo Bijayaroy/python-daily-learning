@@ -1800,3 +1800,480 @@ if __name__ == '__main__':
 ```
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a9cf7464-f534-4a8d-aaee-d81628be555e)
+
+## Day 18: Trees (contd.)
+Given a binary tree, the task is to find the height of the tree. The height of the tree is the number of vertices in the tree from the root to the deepest node.
+
+```python
+class Node:
+ 
+    # Constructor to create a new node
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+ 
+# Compute the "maxDepth" of a tree -- the number of nodes
+# along the longest path from the root node down to the
+# farthest leaf node
+ 
+ 
+def maxDepth(node):
+    if node is None:
+        return 0
+ 
+    else:
+ 
+        # Compute the depth of each subtree
+        lDepth = maxDepth(node.left)
+        rDepth = maxDepth(node.right)
+ 
+        # Use the larger one
+        if (lDepth > rDepth):
+            return lDepth+1
+        else:
+            return rDepth+1
+ 
+ 
+# Driver program to test above function
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+ 
+ 
+print("Height of tree is %d" % (maxDepth(root)))
+```
+Write a function to determine if two trees are identical or not:
+
+Two trees are identical when they have the same data and the arrangement of data is also the same.
+```python
+class Node:
+    # Constructor to create a new node
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+ 
+ 
+# Given two trees, return true if they are structurally
+# identical
+def identicalTrees(a, b):
+ 
+    # 1. Both empty
+    if a is None and b is None:
+        return True
+ 
+    # 2. Both non-empty -> Compare them
+    if a is not None and b is not None:
+        return ((a.data == b.data) and
+                identicalTrees(a.left, b.left)and
+                identicalTrees(a.right, b.right))
+ 
+    # 3. one empty, one not -- false
+    return False
+ 
+ 
+# Driver code
+root1 = Node(1)
+root2 = Node(1)
+root1.left = Node(2)
+root1.right = Node(3)
+root1.left.left = Node(4)
+root1.left.right = Node(5)
+ 
+root2.left = Node(2)
+root2.right = Node(3)
+root2.left.left = Node(4)
+root2.left.right = Node(5)
+ 
+# Function call
+if __name__ == "__main__":
+  if identicalTrees(root1, root2):
+      print("Both trees are identical")
+  else:
+      print("Trees are not identical")
+```
+### Hackerrank Challenge
+Q1. You are given a partial code that is used for generating the HackerRank Logo of variable thickness.
+Your task is to replace the blank (______) with rjust, ljust or center.
+```python
+#Replace all ______ with rjust, ljust or center. 
+
+thickness = int(input()) #This must be an odd number
+c = 'H'
+
+#Top Cone
+for i in range(thickness):
+    print((c*i).rjust(thickness-1)+c+(c*i).ljust(thickness-1))
+
+#Top Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))
+
+#Middle Belt
+for i in range((thickness+1)//2):
+    print((c*thickness*5).center(thickness*6))    
+
+#Bottom Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))    
+
+#Bottom Cone
+for i in range(thickness):
+    print(((c*(thickness-i-1)).rjust(thickness)+c+(c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6))
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/31ae9d1c-19e3-473e-a57d-620d1a0589bc)
+Q2. You are given a string S and width W.
+Your task is to wrap the string into a paragraph of width w.
+```python
+import textwrap
+
+def wrap(string, max_width):
+    return textwrap.fill(string, max_width)
+
+if __name__ == '__main__':
+    string, max_width = input(), int(input())
+    result = wrap(string, max_width)
+    print(result)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a3365a17-bacf-4b1b-aceb-b1e4a225ea67)
+
+## Day 19 : Trees (Problems contd.)
+Given a binary tree, the task is to convert the binary tree into its Mirror tree. Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged. 
+```python
+class newNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = self.right = None
+
+def mirror(node):
+ 
+    if (node == None):
+        return
+    else:
+ 
+        temp = node
+ 
+        """ do the subtrees """
+        mirror(node.left)
+        mirror(node.right)
+ 
+        """ swap the pointers in this node """
+        temp = node.left
+        node.left = node.right
+        node.right = temp
+ 
+ 
+""" Helper function to print Inorder traversal."""
+ 
+ 
+def inOrder(node):
+ 
+    if (node == None):
+        return
+ 
+    inOrder(node.left)
+    print(node.data, end=" ")
+    inOrder(node.right)
+ 
+ 
+# Driver code
+if __name__ == "__main__":
+ 
+    root = newNode(1)
+    root.left = newNode(2)
+    root.right = newNode(3)
+    root.left.left = newNode(4)
+    root.left.right = newNode(5)
+ 
+    """ Print inorder traversal of
+        the input tree """
+    print("Inorder traversal of the",
+          "constructed tree is")
+    inOrder(root)
+ 
+    """ Convert tree to its mirror """
+    mirror(root)
+ 
+    """ Print inorder traversal of 
+        the mirror tree """
+    print("\nInorder traversal of",
+          "the mirror tree is ")
+    inOrder(root)
+```
+### Hackerrank Challenge:
+Q1. Mr. Vincent works in a door mat manufacturing company. One day, he designed a new door mat with the following specifications:
+
+Mat size must be N*M. (N is an odd natural number, and M is 3 times N.)
+The design should have 'WELCOME' written in the center.
+The design pattern should only use |, . and - characters.
+```python
+def create_door_mat(N, M):
+    # Top design
+    for i in range(N // 2):
+        pattern = '.|.' * (2 * i + 1)
+        print(pattern.center(M, '-'))
+
+    # Welcome message
+    print('WELCOME'.center(M, '-'))
+
+    # Bottom design (similar to top but reversed)
+    for i in range(N // 2 - 1, -1, -1):
+        pattern = '.|.' * (2 * i + 1)
+        print(pattern.center(M, '-'))
+
+N,M = map(int,input().split())
+create_door_mat(N, M)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/bbe69871-046e-473b-8cc4-3a2492eaa9f0)
+
+Q2.Given an integer,n , print the following values for each integer i from 1 to n:
+
+Decimal
+Octal
+Hexadecimal (capitalized)
+Binary
+```python
+def print_formatted(number):
+    width = len("{0:b}".format(number))
+    for i in range(1, number + 1):
+        decimal = "{0:{width}d}".format(i, width=width)
+        octal = "{0:{width}o}".format(i, width=width)
+        hexadecimal = "{0:{width}X}".format(i, width=width)
+        binary = "{0:{width}b}".format(i, width=width)
+        print(decimal, octal, hexadecimal, binary)
+if __name__ == '__main__':
+    n = int(input())
+    print_formatted(n)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/2bd54455-f8a6-4291-a246-9c1f14758fab)
+
+## Day 21 : Trees (Problems contd.)
+Diameter of Tree in O(n)
+```python
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+def build_tree():
+    val = input("Enter the value of the node (or type 'None' if it's a null node): ")
+    if val.lower() == 'none':
+        return None
+    node = TreeNode(int(val))
+    node.left = build_tree()
+    node.right = build_tree()
+    return node
+
+def height_and_diameter(node):
+    if not node:
+        return 0, 0
+    
+    left_height, left_diameter = height_and_diameter(node.left)
+    right_height, right_diameter = height_and_diameter(node.right)
+    
+    current_height = max(left_height, right_height) + 1
+    current_diameter = max(left_height + right_height, left_diameter, right_diameter)
+    
+    return current_height, current_diameter
+
+def diameter_of_binary_tree(root):
+    _, diameter = height_and_diameter(root)
+    return diameter
+# Main function to build the binary tree and calculate its diameter
+def main():
+    print("Enter the nodes of the binary tree (enter 'None' for null nodes):")
+    root = build_tree()
+    print("Diameter of the binary tree:", diameter_of_binary_tree(root))
+
+if __name__ == "__main__":
+    main()
+```
+### Hackerrank Challenge:
+Q1. You are given an integer, N. Your task is to print an alphabet rangoli of size N . (Rangoli is a form of Indian folk art based on creation of patterns.)
+```python
+def print_rangoli(size):
+    import string
+    
+    # Create alphabet list
+    alphabet = string.ascii_lowercase
+    
+    # Create the upper half of the rangoli
+    for i in range(size-1, -size, -1):
+        row = ['-'] * (2*size-1)
+        for j in range(size - abs(i)):
+            row[size - 1 - j] = alphabet[abs(i) + j]
+            row[size - 1 + j] = alphabet[abs(i) + j]
+        print('-'.join(row))
+
+if __name__ == '__main__':
+    n = int(input())
+    print_rangoli(n)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/962a87e6-cab9-4508-b131-af199040f97d)
+
+Q2.You are asked to ensure that the first and last names of people begin with a capital letter in their passports. For example, alison heck should be capitalised correctly as Alison Heck.
+Given a full name, your task is to capitalize the name appropriately.
+```python
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the solve function below.
+def solve(s):
+    return s.title()
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    s = input()
+
+    result = solve(s)
+
+    fptr.write(result + '\n')
+
+    fptr.close()
+
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a5cdf9ae-19f1-4180-9def-1df77bd4b796)
+
+## Day 22 : Trees (Problems contd.)
+To check if a tree is height-balanced
+```python
+class Node:
+    # Constructor to create a new Node
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+ 
+# function to find height of binary tree
+ 
+ 
+def height(root):
+ 
+    # base condition when binary tree is empty
+    if root is None:
+        return 0
+    return max(height(root.left), height(root.right)) + 1
+ 
+# function to check if tree is height-balanced or not
+ 
+ 
+def isBalanced(root):
+ 
+    # Base condition
+    if root is None:
+        return True
+ 
+    # for left and right subtree height
+    lh = height(root.left)
+    rh = height(root.right)
+ 
+    # allowed values for (lh - rh) are 1, -1, 0
+    if (abs(lh - rh) <= 1) and isBalanced(
+            root.left) is True and isBalanced(root.right) is True:
+        return True
+ 
+    # if we reach here means tree is not
+    # height-balanced tree
+    return False
+ 
+ 
+# Driver function to test the above function
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.left.left.left = Node(8)
+if isBalanced(root):
+    print("Tree is balanced")
+else:
+    print("Tree is not balanced")
+```
+### Hackerrank Challenge:
+Q1. You are asked to ensure that the first and last names of people begin with a capital letter in their passports. For example, alison heck should be capitalised correctly as Alison Heck.
+Given a full name, your task is to capitalize the name appropriately.
+```python
+#!/bin/python3
+
+import os
+
+# Complete the solve function below.
+def solve(s):
+    return s.title()
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    s = input()
+
+    result = solve(s)
+
+    fptr.write(result + '\n')
+
+    fptr.close()
+
+```
+Output:
+![Screenshot 2024-02-15 212601](https://github.com/bijayaroy/python-daily-learning/assets/93483189/9c003fcf-2158-4f04-be08-54d0d29d607e)
+
+Q2. User
+Kevin and Stuart want to play the 'The Minion Game'.
+
+Game Rules
+
+Both players are given the same string,s .
+Both players have to make substrings using the letters of the string s .
+Stuart has to make words starting with consonants.
+Kevin has to make words starting with vowels.
+The game ends when both players have made all possible substrings.
+
+Scoring
+A player gets +1 point for each occurrence of the substring in the string s.
+
+For Example:
+String  = BANANA
+Kevin's vowel beginning word = ANA
+Here, ANA occurs twice in BANANA. Hence, Kevin will get 2 Points
+```python
+def minion_game(string):
+    vowels = 'AEIOU'
+    kevin_score = 0
+    stuart_score = 0
+    length = len(string)
+
+    for i in range(length):
+        if string[i] in vowels:
+            kevin_score += length - i
+        else:
+            stuart_score += length - i
+
+    if kevin_score > stuart_score:
+        print("Kevin", kevin_score)
+    elif kevin_score < stuart_score:
+        print("Stuart", stuart_score)
+    else:
+        print("Draw")
+
+
+if __name__ == '__main__':
+    s = input()
+    minion_game(s)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/d5db4d47-f284-4ac7-a1ab-89c40b464f1a)
