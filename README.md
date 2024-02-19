@@ -2319,3 +2319,129 @@ if __name__ == '__main__':
 ```
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e86c6c16-1ef9-4767-9b74-066b9ca60e2f)
+
+Q2. Raghu is a shoe shop owner. His shop has X number of shoes.
+
+He has a list containing the size of each shoe he has in his shop.
+
+There are N number of customers who are willing to pay xi amount of money only if they get the shoe of their desired size.
+
+Your task is to compute how much money Raghu earned.
+```python
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+#First we imported the counter from collections.
+from collections import Counter
+#then we have taken the input of x i.e, the total number of shoes.
+x = int(input())
+#and we have taken the input of y i.e, the list of all shoe sizes. Then we used counter to arrange our list as a dictionary.
+y = Counter(map(int, input().split()))
+#we’ve also taken the input of z i.e, the total number of customers.
+z = int(input())
+#then we created a variable to store the total.
+total = 0
+# then we created a for loop in the range of z(total number of customers)
+for i in range(z):
+    #inside for loop, we have taken the input of size and rate from each customer. Then we used an if condition to verify the input size is in y.
+    size, rate = map(int, input().split())
+    if y[size]: 
+        y[size] -= 1
+        #then we added all the rates in our total and printed it.
+        total += rate
+print(total)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/dd29056c-7a08-435c-bc42-31c1dee461b7)
+
+## Day 24:
+### Hackerrank Challenge:
+Q1. In this challenge, you will be given 2 integers, n and m. There are n words, which might repeat, in word group A. There are m words belonging to word group B. For each m words, check whether the word has appeared in group A or not. Print the indices of each occurrence of m in group A. If it does not appear, print -1.
+Steps Used in solving the problem -
+Step 1: First we imported defaultdict from collections.
+Step 2: then we have taken the input of input_n and input_m.
+Step 3: then we defined defaultdict as d.
+Step 4: In the fourth line, we create a for loop in the range of input_n.
+Step 5: Inside for loop, we have taken input and appended it into d. 
+Step 6: then we created another for loop in the range of input_m.
+Step 7: Inside for loop, we have taken input. Then we used an if condition to check if ans2 is in d then print the index value of ans2 else print -1.
+```python
+from collections import defaultdict
+input_n, input_m = map(int, input().split())
+d = defaultdict(list)
+for i in range(input_n):
+    ans1 = input()
+    d[ans1].append(i+1)
+for j in range(input_m):
+    ans2 = input()
+    if ans2 in d:
+        print(*d[ans2])
+    else:
+        print(-1)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a1eb52e1-0e1b-4e0c-b254-62c4c2aa39b4)
+
+Q2. Task
+Dr. John Wesley has a spreadsheet containing a list of student’s IDs, marks, class and name.
+
+Your task is to help Dr. Wesley calculate the average marks of the students.
+
+Average = Sum of all marks / Total Students
+
+Note:
+1. Columns can be in any order. IDs, marks, class and name can be written in any order in the spreadsheet.
+2. Column names are ID, MARKS, CLASS and NAME. (The spelling and case type of these names won’t change.)
+```python
+from collections import namedtuple
+input_ = int(input())
+my_fields = input().split()
+total_marks = 0
+for _ in range(input_):
+    students = namedtuple('my_student', my_fields)
+    MARKS, CLASS, NAME, ID = input().split()
+    my_student = students(MARKS, CLASS, NAME, ID)
+    total_marks += int(my_student.MARKS)
+print((total_marks / input_))
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/14afb45e-8bde-4615-9aaf-1245b19e5985)
+
+## Day 25:
+### Hackerrank Challenge:
+Q1. You are the manager of a supermarket.
+You have a list of N items together with their prices that consumers bought on a particular day.
+Your task is to print each item_name and net_price in order of its first occurrence.
+
+item_name = Name of the item.
+net_price = Quantity of the item sold multiplied by the price of each item.
+
+```python
+from collections import OrderedDict
+a = OrderedDict()
+input_ = int(input())
+for _ in range(input_):
+    item, space, price = input().rpartition(' ')
+    a[item] = a.get(item, 0) + int(price)
+for item, price in a.items():
+    print(item, price)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/caf8d043-d670-43d1-ad1c-15f9cd915ad7)
+
+Q2. You are given n words. Some words may repeat. For each word, output its number of occurrences. The output order should correspond with the input order of appearance of the word. See the sample input/output for clarification. Note: Each input line ends with a "\n" character.
+Steps Followed:
+
+In the first line of code we have imported counter from collections.
+As the problem statement suggests we need to find the count of words. So for that, we have created a list of words.
+In the next step we convert that list to a unique list using the counter module in python. 
+Next in the step we printed the count of unique words in the list using len method.
+Lastly we .values() method to find and print all the values of words inside res variable
+```python
+from collections import Counter
+n = int(input())
+l1 = [input().strip() for _ in range(n)]
+res = Counter(l1)
+print(len(res))
+print(*res.values())
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/fd9f3045-6ca6-4cff-8de9-28d496a3224a)
