@@ -2096,6 +2096,96 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+Deletion in a Binary tree:
+```python
+class Node: 
+    def __init__(self, data): 
+        self.data = data 
+        self.left = None
+        self.right = None
+  
+# Inorder traversal of a binary tree 
+  
+  
+def inorder(temp): 
+    if(not temp): 
+        return
+    inorder(temp.left) 
+    print(temp.data, end=" ") 
+    inorder(temp.right) 
+  
+# function to delete the given deepest node (d_node) in binary tree 
+  
+  
+def deleteDeepest(root, d_node): 
+    q = [] 
+    q.append(root) 
+    while(len(q)): 
+        temp = q.pop(0) 
+        if temp is d_node: 
+            temp = None
+            return
+        if temp.right: 
+            if temp.right is d_node: 
+                temp.right = None
+                return
+            else: 
+                q.append(temp.right) 
+        if temp.left: 
+            if temp.left is d_node: 
+                temp.left = None
+                return
+            else: 
+                q.append(temp.left) 
+  
+# function to delete element in binary tree 
+  
+  
+def deletion(root, key): 
+    if root == None: 
+        return None
+    if root.left == None and root.right == None: 
+        if root.key == key: 
+            return None
+        else: 
+            return root 
+    key_node = None
+    q = [] 
+    q.append(root) 
+    temp = None
+    while(len(q)): 
+        temp = q.pop(0) 
+        if temp.data == key: 
+            key_node = temp 
+        if temp.left: 
+            q.append(temp.left) 
+        if temp.right: 
+            q.append(temp.right) 
+    if key_node: 
+        x = temp.data 
+        deleteDeepest(root, temp) 
+        key_node.data = x 
+    return root 
+  
+  
+# Driver code 
+if __name__ == '__main__': 
+    root = Node(10) 
+    root.left = Node(11) 
+    root.left.left = Node(7) 
+    root.left.right = Node(12) 
+    root.right = Node(9) 
+    root.right.left = Node(15) 
+    root.right.right = Node(8) 
+    print("The tree before the deletion: ", end = "") 
+    inorder(root) 
+    key = 11
+    root = deletion(root, key) 
+    print(); 
+    print("The tree after the deletion: ", end = "") 
+    inorder(root) 
+```
 ### Hackerrank Challenge:
 Q1. You are given an integer, N. Your task is to print an alphabet rangoli of size N . (Rangoli is a form of Indian folk art based on creation of patterns.)
 ```python
@@ -2149,299 +2239,3 @@ if __name__ == '__main__':
 ```
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a5cdf9ae-19f1-4180-9def-1df77bd4b796)
-
-## Day 22 : Trees (Problems contd.)
-To check if a tree is height-balanced
-```python
-class Node:
-    # Constructor to create a new Node
-    def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
- 
-# function to find height of binary tree
- 
- 
-def height(root):
- 
-    # base condition when binary tree is empty
-    if root is None:
-        return 0
-    return max(height(root.left), height(root.right)) + 1
- 
-# function to check if tree is height-balanced or not
- 
- 
-def isBalanced(root):
- 
-    # Base condition
-    if root is None:
-        return True
- 
-    # for left and right subtree height
-    lh = height(root.left)
-    rh = height(root.right)
- 
-    # allowed values for (lh - rh) are 1, -1, 0
-    if (abs(lh - rh) <= 1) and isBalanced(
-            root.left) is True and isBalanced(root.right) is True:
-        return True
- 
-    # if we reach here means tree is not
-    # height-balanced tree
-    return False
- 
- 
-# Driver function to test the above function
-root = Node(1)
-root.left = Node(2)
-root.right = Node(3)
-root.left.left = Node(4)
-root.left.right = Node(5)
-root.left.left.left = Node(8)
-if isBalanced(root):
-    print("Tree is balanced")
-else:
-    print("Tree is not balanced")
-```
-### Hackerrank Challenge:
-Q1. You are asked to ensure that the first and last names of people begin with a capital letter in their passports. For example, alison heck should be capitalised correctly as Alison Heck.
-Given a full name, your task is to capitalize the name appropriately.
-```python
-#!/bin/python3
-
-import os
-
-# Complete the solve function below.
-def solve(s):
-    return s.title()
-
-if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
-
-    s = input()
-
-    result = solve(s)
-
-    fptr.write(result + '\n')
-
-    fptr.close()
-
-```
-Output:
-![Screenshot 2024-02-15 212601](https://github.com/bijayaroy/python-daily-learning/assets/93483189/9c003fcf-2158-4f04-be08-54d0d29d607e)
-
-Q2. User
-Kevin and Stuart want to play the 'The Minion Game'.
-
-Game Rules
-
-Both players are given the same string,s .
-Both players have to make substrings using the letters of the string s .
-Stuart has to make words starting with consonants.
-Kevin has to make words starting with vowels.
-The game ends when both players have made all possible substrings.
-
-Scoring
-A player gets +1 point for each occurrence of the substring in the string s.
-
-For Example:
-String  = BANANA
-Kevin's vowel beginning word = ANA
-Here, ANA occurs twice in BANANA. Hence, Kevin will get 2 Points
-```python
-def minion_game(string):
-    vowels = 'AEIOU'
-    kevin_score = 0
-    stuart_score = 0
-    length = len(string)
-
-    for i in range(length):
-        if string[i] in vowels:
-            kevin_score += length - i
-        else:
-            stuart_score += length - i
-
-    if kevin_score > stuart_score:
-        print("Kevin", kevin_score)
-    elif kevin_score < stuart_score:
-        print("Stuart", stuart_score)
-    else:
-        print("Draw")
-
-
-if __name__ == '__main__':
-    s = input()
-    minion_game(s)
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/d5db4d47-f284-4ac7-a1ab-89c40b464f1a)
-## Day 23: 
-### Hackerrank Challenge:
-Q1. Consider the following:
-
-
-A string, s, of length n where s = c0c1. . . . cn-1.
-
-An integer, k, where k is a factor of n.
-
-We can split s into n/k substrings where each subtring, ti, consists of a contiguous block of k characters in s. Then, use each ti to create string ui such that:
-
-The characters in ui are a subsequence of the characters in ti.
-
-Any repeat occurrence of a character is removed from the string such that each character in ui occurs exactly once. In other words, if the character at some index j in ti occurs at a previous index < j in ti, then do not include the character in string ui.
-
-Given s and k, print n/k lines where each line i denotes string ui.
-
-Example
-
-s = “AAABCADDE”
-
-k = 3
-
-There are three substrings of length 3 to consider: ‘AAA’, ‘BCA’ and ‘DDE’. The first substring is all ‘A’ characters, so u1 = ‘A’. The second substring has all distinct characters, so u2 = ‘BCA’. The third substring has 2 different characters, so u3 = ‘DE’. Note that a subsequence maintains the original order of characters encountered. The order of characters in each subsequence shown is important.
-```python
-def merge_the_tools(string, k):
-    temp = []
-    len_temp = 0
-    for item in string:
-        len_temp += 1
-        if item not in temp:
-            temp.append(item)
-        if len_temp == k:
-            print (''.join(temp))
-            temp = []
-            len_temp = 0
-if __name__ == '__main__':
-    string, k = input(), int(input())
-    merge_the_tools(string, k)
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e86c6c16-1ef9-4767-9b74-066b9ca60e2f)
-
-Q2. Raghu is a shoe shop owner. His shop has X number of shoes.
-
-He has a list containing the size of each shoe he has in his shop.
-
-There are N number of customers who are willing to pay xi amount of money only if they get the shoe of their desired size.
-
-Your task is to compute how much money Raghu earned.
-```python
-# Enter your code here. Read input from STDIN. Print output to STDOUT
-#First we imported the counter from collections.
-from collections import Counter
-#then we have taken the input of x i.e, the total number of shoes.
-x = int(input())
-#and we have taken the input of y i.e, the list of all shoe sizes. Then we used counter to arrange our list as a dictionary.
-y = Counter(map(int, input().split()))
-#we’ve also taken the input of z i.e, the total number of customers.
-z = int(input())
-#then we created a variable to store the total.
-total = 0
-# then we created a for loop in the range of z(total number of customers)
-for i in range(z):
-    #inside for loop, we have taken the input of size and rate from each customer. Then we used an if condition to verify the input size is in y.
-    size, rate = map(int, input().split())
-    if y[size]: 
-        y[size] -= 1
-        #then we added all the rates in our total and printed it.
-        total += rate
-print(total)
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/dd29056c-7a08-435c-bc42-31c1dee461b7)
-
-## Day 24:
-### Hackerrank Challenge:
-Q1. In this challenge, you will be given 2 integers, n and m. There are n words, which might repeat, in word group A. There are m words belonging to word group B. For each m words, check whether the word has appeared in group A or not. Print the indices of each occurrence of m in group A. If it does not appear, print -1.
-Steps Used in solving the problem -
-Step 1: First we imported defaultdict from collections.
-Step 2: then we have taken the input of input_n and input_m.
-Step 3: then we defined defaultdict as d.
-Step 4: In the fourth line, we create a for loop in the range of input_n.
-Step 5: Inside for loop, we have taken input and appended it into d. 
-Step 6: then we created another for loop in the range of input_m.
-Step 7: Inside for loop, we have taken input. Then we used an if condition to check if ans2 is in d then print the index value of ans2 else print -1.
-```python
-from collections import defaultdict
-input_n, input_m = map(int, input().split())
-d = defaultdict(list)
-for i in range(input_n):
-    ans1 = input()
-    d[ans1].append(i+1)
-for j in range(input_m):
-    ans2 = input()
-    if ans2 in d:
-        print(*d[ans2])
-    else:
-        print(-1)
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a1eb52e1-0e1b-4e0c-b254-62c4c2aa39b4)
-
-Q2. Task
-Dr. John Wesley has a spreadsheet containing a list of student’s IDs, marks, class and name.
-
-Your task is to help Dr. Wesley calculate the average marks of the students.
-
-Average = Sum of all marks / Total Students
-
-Note:
-1. Columns can be in any order. IDs, marks, class and name can be written in any order in the spreadsheet.
-2. Column names are ID, MARKS, CLASS and NAME. (The spelling and case type of these names won’t change.)
-```python
-from collections import namedtuple
-input_ = int(input())
-my_fields = input().split()
-total_marks = 0
-for _ in range(input_):
-    students = namedtuple('my_student', my_fields)
-    MARKS, CLASS, NAME, ID = input().split()
-    my_student = students(MARKS, CLASS, NAME, ID)
-    total_marks += int(my_student.MARKS)
-print((total_marks / input_))
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/14afb45e-8bde-4615-9aaf-1245b19e5985)
-
-## Day 25:
-### Hackerrank Challenge:
-Q1. You are the manager of a supermarket.
-You have a list of N items together with their prices that consumers bought on a particular day.
-Your task is to print each item_name and net_price in order of its first occurrence.
-
-item_name = Name of the item.
-net_price = Quantity of the item sold multiplied by the price of each item.
-
-```python
-from collections import OrderedDict
-a = OrderedDict()
-input_ = int(input())
-for _ in range(input_):
-    item, space, price = input().rpartition(' ')
-    a[item] = a.get(item, 0) + int(price)
-for item, price in a.items():
-    print(item, price)
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/caf8d043-d670-43d1-ad1c-15f9cd915ad7)
-
-Q2. You are given n words. Some words may repeat. For each word, output its number of occurrences. The output order should correspond with the input order of appearance of the word. See the sample input/output for clarification. Note: Each input line ends with a "\n" character.
-Steps Followed:
-
-In the first line of code we have imported counter from collections.
-As the problem statement suggests we need to find the count of words. So for that, we have created a list of words.
-In the next step we convert that list to a unique list using the counter module in python. 
-Next in the step we printed the count of unique words in the list using len method.
-Lastly we .values() method to find and print all the values of words inside res variable
-```python
-from collections import Counter
-n = int(input())
-l1 = [input().strip() for _ in range(n)]
-res = Counter(l1)
-print(len(res))
-print(*res.values())
-```
-Output:
-![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/fd9f3045-6ca6-4cff-8de9-28d496a3224a)
