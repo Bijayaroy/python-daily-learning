@@ -2239,3 +2239,204 @@ if __name__ == '__main__':
 ```
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a5cdf9ae-19f1-4180-9def-1df77bd4b796)
+## Day 22 : Trees (Problems contd.)
+To check if a tree is height-balanced
+```python
+class Node:
+    # Constructor to create a new Node
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+ 
+# function to find height of binary tree
+ 
+ 
+def height(root):
+ 
+    # base condition when binary tree is empty
+    if root is None:
+        return 0
+    return max(height(root.left), height(root.right)) + 1
+ 
+# function to check if tree is height-balanced or not
+ 
+ 
+def isBalanced(root):
+ 
+    # Base condition
+    if root is None:
+        return True
+ 
+    # for left and right subtree height
+    lh = height(root.left)
+    rh = height(root.right)
+ 
+    # allowed values for (lh - rh) are 1, -1, 0
+    if (abs(lh - rh) <= 1) and isBalanced(
+            root.left) is True and isBalanced(root.right) is True:
+        return True
+ 
+    # if we reach here means tree is not
+    # height-balanced tree
+    return False
+ 
+ 
+# Driver function to test the above function
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.left.left.left = Node(8)
+if isBalanced(root):
+    print("Tree is balanced")
+else:
+    print("Tree is not balanced")
+```
+### Hackerrank Challenge:
+Q1. You are asked to ensure that the first and last names of people begin with a capital letter in their passports. For example, alison heck should be capitalised correctly as Alison Heck.
+Given a full name, your task is to capitalize the name appropriately.
+```python
+#!/bin/python3
+
+import os
+
+# Complete the solve function below.
+def solve(s):
+    return s.title()
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    s = input()
+
+    result = solve(s)
+
+    fptr.write(result + '\n')
+
+    fptr.close()
+
+```
+Output:
+![Screenshot 2024-02-15 212601](https://github.com/bijayaroy/python-daily-learning/assets/93483189/9c003fcf-2158-4f04-be08-54d0d29d607e)
+
+Q2. Kevin and Stuart want to play the 'The Minion Game'.
+
+Game Rules
+
+Both players are given the same string,s .
+Both players have to make substrings using the letters of the string s .
+Stuart has to make words starting with consonants.
+Kevin has to make words starting with vowels.
+The game ends when both players have made all possible substrings.
+
+Scoring
+A player gets +1 point for each occurrence of the substring in the string s.
+
+For Example:
+String  = BANANA
+Kevin's vowel beginning word = ANA
+Here, ANA occurs twice in BANANA. Hence, Kevin will get 2 Points
+```python
+def minion_game(string):
+    vowels = 'AEIOU'
+    kevin_score = 0
+    stuart_score = 0
+    length = len(string)
+
+    for i in range(length):
+        if string[i] in vowels:
+            kevin_score += length - i
+        else:
+            stuart_score += length - i
+
+    if kevin_score > stuart_score:
+        print("Kevin", kevin_score)
+    elif kevin_score < stuart_score:
+        print("Stuart", stuart_score)
+    else:
+        print("Draw")
+
+
+if __name__ == '__main__':
+    s = input()
+    minion_game(s)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/d5db4d47-f284-4ac7-a1ab-89c40b464f1a)
+
+## Day 23: Trees (Problems contd.)
+### Hackerrank Challenge:
+Q1. Consider the following:
+
+
+A string, s, of length n where s = c0c1. . . . cn-1.
+
+An integer, k, where k is a factor of n.
+
+We can split s into n/k substrings where each subtring, ti, consists of a contiguous block of k characters in s. Then, use each ti to create string ui such that:
+
+The characters in ui are a subsequence of the characters in ti.
+
+Any repeat occurrence of a character is removed from the string such that each character in ui occurs exactly once. In other words, if the character at some index j in ti occurs at a previous index < j in ti, then do not include the character in string ui.
+
+Given s and k, print n/k lines where each line i denotes string ui.
+
+Example
+
+s = “AAABCADDE”
+
+k = 3
+
+There are three substrings of length 3 to consider: ‘AAA’, ‘BCA’ and ‘DDE’. The first substring is all ‘A’ characters, so u1 = ‘A’. The second substring has all distinct characters, so u2 = ‘BCA’. The third substring has 2 different characters, so u3 = ‘DE’. Note that a subsequence maintains the original order of characters encountered. The order of characters in each subsequence shown is important.
+```python
+def merge_the_tools(string, k):
+    temp = []
+    len_temp = 0
+    for item in string:
+        len_temp += 1
+        if item not in temp:
+            temp.append(item)
+        if len_temp == k:
+            print (''.join(temp))
+            temp = []
+            len_temp = 0
+if __name__ == '__main__':
+    string, k = input(), int(input())
+    merge_the_tools(string, k)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e86c6c16-1ef9-4767-9b74-066b9ca60e2f)
+
+Q2. Raghu is a shoe shop owner. His shop has X number of shoes.
+
+He has a list containing the size of each shoe he has in his shop.
+
+There are N number of customers who are willing to pay xi amount of money only if they get the shoe of their desired size.
+
+Your task is to compute how much money Raghu earned.
+```python
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+#First we imported the counter from collections.
+from collections import Counter
+#then we have taken the input of x i.e, the total number of shoes.
+x = int(input())
+#and we have taken the input of y i.e, the list of all shoe sizes. Then we used counter to arrange our list as a dictionary.
+y = Counter(map(int, input().split()))
+#we’ve also taken the input of z i.e, the total number of customers.
+z = int(input())
+#then we created a variable to store the total.
+total = 0
+# then we created a for loop in the range of z(total number of customers)
+for i in range(z):
+    #inside for loop, we have taken the input of size and rate from each customer. Then we used an if condition to verify the input size is in y.
+    size, rate = map(int, input().split())
+    if y[size]: 
+        y[size] -= 1
+        #then we added all the rates in our total and printed it.
+        total += rate
+print(total)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/dd29056c-7a08-435c-bc42-31c1dee461b7)
