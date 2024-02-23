@@ -2440,3 +2440,173 @@ print(total)
 ```
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/dd29056c-7a08-435c-bc42-31c1dee461b7)
+
+## Day 24: Queue :
+A queue is a linear data structure that follows the First In First Out (FIFO) principle. This means that elements are added to the rear (back) of the queue and removed from the front (head). Queues are often used to implement buffers, job scheduling, and other systems where elements need to be processed in a specific order.
+There are several different ways to implement a queue. One common approach is to use a linked list. In this implementation, each element in the queue is represented by a node in the linked list. The rear of the queue is the last node in the linked list, and the front of the queue is the first node in the linked list.
+Another common approach to implementing a queue is to use an array. In this implementation, the elements of the queue are stored in an array. The rear of the queue is the index of the last element in the array, and the front of the queue is the index of the first element in the array.
+
+
+FIFO Principle of Queue:
+A Queue is like a line waiting to purchase tickets, where the first person in line is the first person served. (i.e. First come first serve).
+Position of the entry in a queue ready to be served, that is, the first entry that will be removed from the queue, is called the front of the queue(sometimes, head of the queue), similarly, the position of the last entry in the queue, that is, the one most recently added, is called the rear (or the tail) of the queue. See the below figure.
+
+
+Characteristics of Queue:
+- Queue can handle multiple data.
+- We can access both ends.
+- They are fast and flexible.
+
+- 
+Here are some of the operations that can be performed on a queue:
+Enqueue: Adds an element to the rear of the queue.
+Dequeue: Removes an element from the front of the queue.
+Peek: Returns the element at the front of the queue without removing it.
+IsEmpty: Returns true if the queue is empty, and false otherwise.
+
+
+Q. Implement a queue using an array
+```python
+class Queue:
+
+	# To initialize the object.
+	def __init__(self, c):
+
+		self.queue = []
+		self.front = self.rear = 0
+		self.capacity = c
+
+	# Function to insert an element
+	# at the rear of the queue
+	def queueEnqueue(self, data):
+
+		# Check queue is full or not
+		if(self.capacity == self.rear):
+			print("\nQueue is full")
+
+		# Insert element at the rear
+		else:
+			self.queue.append(data)
+			self.rear += 1
+
+	# Function to delete an element
+	# from the front of the queue
+	def queueDequeue(self):
+
+		# If queue is empty
+		if(self.front == self.rear):
+			print("Queue is empty")
+
+		# Pop the front element from list
+		else:
+			x = self.queue.pop(0)
+			self.rear -= 1
+
+	# Function to print queue elements
+	def queueDisplay(self):
+
+		if(self.front == self.rear):
+			print("\nQueue is Empty")
+
+		# Traverse front to rear to
+		# print elements
+		for i in self.queue:
+			print(i, "<--", end='')
+
+	# Print front of queue
+	def queueFront(self):
+
+		if(self.front == self.rear):
+			print("\nQueue is Empty")
+
+		print("\nFront Element is:",
+			self.queue[self.front])
+
+
+# Driver code
+if __name__ == '__main__':
+
+	# Create a new queue of
+	# capacity 4
+	q = Queue(4)
+
+	# Print queue elements
+	q.queueDisplay()
+
+	# Inserting elements in the queue
+	q.queueEnqueue(20)
+	q.queueEnqueue(30)
+	q.queueEnqueue(40)
+	q.queueEnqueue(50)
+
+	# Print queue elements
+	q.queueDisplay()
+
+	# Insert element in queue
+	q.queueEnqueue(60)
+
+	# Print queue elements
+	q.queueDisplay()
+
+	q.queueDequeue()
+	q.queueDequeue()
+	print("\n\nafter two node deletion\n")
+
+	# Print queue elements
+	q.queueDisplay()
+
+	# Print front of queue
+	q.queueFront()
+```
+
+
+### Hackerrank Challenge:
+Q1. In this challenge, you will be given 2 integers, n and m. There are n words, which might repeat, in word group A. There are m words belonging to word group B. For each m words, check whether the word has appeared in group A or not. Print the indices of each occurrence of m in group A. If it does not appear, print -1.
+Steps Used in solving the problem -
+Step 1: First we imported defaultdict from collections.
+Step 2: then we have taken the input of input_n and input_m.
+Step 3: then we defined defaultdict as d.
+Step 4: In the fourth line, we create a for loop in the range of input_n.
+Step 5: Inside for loop, we have taken input and appended it into d. 
+Step 6: then we created another for loop in the range of input_m.
+Step 7: Inside for loop, we have taken input. Then we used an if condition to check if ans2 is in d then print the index value of ans2 else print -1.
+```python
+from collections import defaultdict
+input_n, input_m = map(int, input().split())
+d = defaultdict(list)
+for i in range(input_n):
+    ans1 = input()
+    d[ans1].append(i+1)
+for j in range(input_m):
+    ans2 = input()
+    if ans2 in d:
+        print(*d[ans2])
+    else:
+        print(-1)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/a1eb52e1-0e1b-4e0c-b254-62c4c2aa39b4)
+
+Q2. Dr. John Wesley has a spreadsheet containing a list of student’s IDs, marks, class and name.
+
+Your task is to help Dr. Wesley calculate the average marks of the students.
+
+Average = Sum of all marks / Total Students
+
+Note:
+1. Columns can be in any order. IDs, marks, class and name can be written in any order in the spreadsheet.
+2. Column names are ID, MARKS, CLASS and NAME. (The spelling and case type of these names won’t change.)
+```python
+from collections import namedtuple
+input_ = int(input())
+my_fields = input().split()
+total_marks = 0
+for _ in range(input_):
+    students = namedtuple('my_student', my_fields)
+    MARKS, CLASS, NAME, ID = input().split()
+    my_student = students(MARKS, CLASS, NAME, ID)
+    total_marks += int(my_student.MARKS)
+print((total_marks / input_))
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/14afb45e-8bde-4615-9aaf-1245b19e5985)
