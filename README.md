@@ -2457,7 +2457,7 @@ Characteristics of Queue:
 - We can access both ends.
 - They are fast and flexible.
 
-- 
+
 Here are some of the operations that can be performed on a queue:
 Enqueue: Adds an element to the rear of the queue.
 Dequeue: Removes an element from the front of the queue.
