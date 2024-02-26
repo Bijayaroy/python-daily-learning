@@ -2610,3 +2610,642 @@ print((total_marks / input_))
 ```
 Output:
 ![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/14afb45e-8bde-4615-9aaf-1245b19e5985)
+## Day 25: Stack
+A stack is a fundamental data structure in computer science that follows the Last In, First Out (LIFO) principle. This means that the last element added to the stack is the first one to be removed. It operates much like a stack of plates in a cafeteria, where you can only add or remove plates from the top of the stack.
+
+The stack data structure supports two primary operations: push and pop.
+
+Push: This operation adds an element to the top of the stack.
+Pop: This operation removes the element at the top of the stack.
+Additionally, there are two other common operations associated with stacks:
+
+Peek (or Top): This operation retrieves the element at the top of the stack without removing it.
+isEmpty: This operation checks if the stack is empty or not.
+```python
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        """Add an element to the top of the stack."""
+        self.items.append(item)
+
+    def pop(self):
+        """Remove and return the element at the top of the stack."""
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            raise IndexError("pop from empty stack")
+
+    def peek(self):
+        """Return the element at the top of the stack without removing it."""
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            return None
+
+    def is_empty(self):
+        """Check if the stack is empty."""
+        return len(self.items) == 0
+
+    def size(self):
+        """Return the number of elements in the stack."""
+        return len(self.items)
+
+```
+```python
+stack = Stack()
+
+stack.push(1)
+stack.push(2)
+stack.push(3)
+
+print("Stack size:", stack.size())  # Output: 3
+print("Top of the stack:", stack.peek())  # Output: 3
+
+print("Popped item:", stack.pop())  # Output: 3
+print("Popped item:", stack.pop())  # Output: 2
+
+print("Is the stack empty?", stack.is_empty())  # Output: False
+
+print("Popped item:", stack.pop())  # Output: 1
+print("Is the stack empty?", stack.is_empty())  # Output: True
+
+# Trying to pop from an empty stack will raise an IndexError
+# print("Popped item:", stack.pop())  # Output: IndexError: pop from empty stack
+
+```
+### Hackerrank Challenge:
+Q1. You are the manager of a supermarket.
+You have a list of N items together with their prices that consumers bought on a particular day.
+Your task is to print each item_name and net_price in order of its first occurrence.
+
+item_name = Name of the item.
+net_price = Quantity of the item sold multiplied by the price of each item.
+
+```python
+from collections import OrderedDict
+a = OrderedDict()
+input_ = int(input())
+for _ in range(input_):
+    item, space, price = input().rpartition(' ')
+    a[item] = a.get(item, 0) + int(price)
+for item, price in a.items():
+    print(item, price)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/caf8d043-d670-43d1-ad1c-15f9cd915ad7)
+
+Q2. You are given n words. Some words may repeat. For each word, output its number of occurrences. The output order should correspond with the input order of appearance of the word. See the sample input/output for clarification. Note: Each input line ends with a "\n" character.
+Steps Followed:
+
+In the first line of code we have imported counter from collections.
+As the problem statement suggests we need to find the count of words. So for that, we have created a list of words.
+In the next step we convert that list to a unique list using the counter module in python. 
+Next in the step we printed the count of unique words in the list using len method.
+Lastly we .values() method to find and print all the values of words inside res variable
+```python
+from collections import Counter
+n = int(input())
+l1 = [input().strip() for _ in range(n)]
+res = Counter(l1)
+print(len(res))
+print(*res.values())
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/fd9f3045-6ca6-4cff-8de9-28d496a3224a)
+
+## Day 26: Stack and Queue (contd.)
+Q. Given an expression string exp, write a program to examine whether the pairs and the orders of “{“, “}”, “(“, “)”, “[“, “]” are correct in the given expression.
+```python
+def areBracketsBalanced(expr):
+    stack = []
+ 
+    # Traversing the Expression
+    for char in expr:
+        if char in ["(", "{", "["]:
+ 
+            # Push the element in the stack
+            stack.append(char)
+        else:
+ 
+            # IF current character is not opening
+            # bracket, then it must be closing.
+            # So stack cannot be empty at this point.
+            if not stack:
+                return False
+            current_char = stack.pop()
+            if current_char == '(':
+                if char != ")":
+                    return False
+            if current_char == '{':
+                if char != "}":
+                    return False
+            if current_char == '[':
+                if char != "]":
+                    return False
+ 
+    # Check Empty Stack
+    if stack:
+        return False
+    return True
+ 
+ 
+# Driver Code
+if __name__ == "__main__":
+    expr = "{()}[]"
+ 
+    # Function call
+    if areBracketsBalanced(expr):
+        print("Balanced")
+    else:
+        print("Not Balanced")
+```
+Q.Implementation of Deque using circular array
+```python
+MAX = 100
+ 
+ 
+class Deque:
+    def __init__(self, size):
+        self.arr = [0] * MAX
+        self.front = -1
+        self.rear = 0
+        self.size = size
+ 
+    ''' Operations on Deque:
+    void  insertfront(int key);
+    void  insertrear(int key);
+    void  deletefront();
+    void  deleterear();
+    bool  isFull();
+    bool  isEmpty();
+    int  getFront();
+    int  getRear(); '''
+ 
+    # Checks whether Deque is full or not.
+    def isFull(self):
+        return ((self.front == 0 and self.rear == self.size-1) or self.front == self.rear + 1)
+ 
+    # Checks whether Deque is empty or not.
+ 
+    def isEmpty(self):
+        return (self.front == -1)
+ 
+    # Inserts an element at front
+    def insertfront(self, key):
+ 
+        # check whether Deque if  full or not
+        if (self.isFull()):
+            print("Overflow")
+            return
+ 
+        # If queue is initially empty
+        if (self.front == -1):
+            self.front = 0
+            self.rear = 0
+ 
+        # front is at first position of queue
+        elif (self.front == 0):
+            self.front = self.size - 1
+ 
+        else:  # decrement front end by '1'
+            self.front = self.front-1
+ 
+        # insert current element into Deque
+        self.arr[self.front] = key
+ 
+    # function to inset element at rear end
+    # of Deque.
+ 
+    def insertrear(self, key):
+        if (self.isFull()):
+            print(" Overflow")
+            return
+ 
+        # If queue is initially empty
+        if (self.front == -1):
+            self.front = 0
+            self.rear = 0
+ 
+        # rear is at last position of queue
+        elif (self.rear == self.size-1):
+            self.rear = 0
+ 
+        # increment rear end by '1'
+        else:
+            self.rear = self.rear+1
+ 
+        # insert current element into Deque
+        self.arr[self.rear] = key
+ 
+    # Deletes element at front end of Deque
+ 
+    def deletefront(self):
+        # check whether Deque is empty or not
+        if (self.isEmpty()):
+            print("Queue Underflow")
+            return
+ 
+        # Deque has only one element
+        if (self.front == self.rear):
+            self.front = -1
+            self.rear = -1
+ 
+        else:
+            # back to initial position
+            if (self.front == self.size - 1):
+                self.front = 0
+ 
+            else:  # increment front by '1' to remove current
+                # front value from Deque
+                self.front = self.front+1
+ 
+    # Delete element at rear end of Deque
+ 
+    def deleterear(self):
+        if (self.isEmpty()):
+            print(" Underflow")
+            return
+ 
+        # Deque has only one element
+        if (self.front == self.rear):
+            self.front = -1
+            self.rear = -1
+ 
+        elif (self.rear == 0):
+            self.rear = self.size-1
+        else:
+            self.rear = self.rear-1
+ 
+    # Returns front element of Deque
+ 
+    def getFront(self):
+        # check whether Deque is empty or not
+        if (self.isEmpty()):
+            print(" Underflow")
+            return -1
+ 
+        return self.arr[self.front]
+ 
+    # function return rear element of Deque
+ 
+    def getRear(self):
+        # check whether Deque is empty or not
+        if(self.isEmpty() or self.rear < 0):
+            print(" Underflow")
+            return -1
+ 
+        return self.arr[self.rear]
+ 
+ 
+# Driver code
+if __name__ == "__main__":
+  dq = Deque(5)
+ 
+  # Function calls
+  print("Insert element at rear end  : 5 ")
+  dq.insertrear(5)
+ 
+  print("insert element at rear end : 10 ")
+  dq.insertrear(10)
+ 
+  print(f"get rear element : {dq.getRear()}")
+ 
+  dq.deleterear()
+  print(f"After delete rear element new rear become : {dq.getRear()}")
+ 
+  print("inserting element at front end")
+  dq.insertfront(15)
+ 
+  print(f"get front element: {dq.getFront()}")
+ 
+  dq.deletefront()
+ 
+  print(f"After delete front element new front become : {dq.getFront()}")
+```
+Q.Check if a queue can be sorted into another queue using a stack
+```python
+from queue import Queue 
+ 
+# Function to check if given queue element 
+# can be sorted into another queue using a 
+# stack. 
+def checkSorted(n, q):
+    st = [] 
+    expected = 1
+    fnt = None
+ 
+    # while given Queue is not empty. 
+    while (not q.empty()): 
+        fnt = q.queue[0] 
+        q.get() 
+ 
+        # if front element is the 
+        # expected element 
+        if (fnt == expected): 
+            expected += 1
+ 
+        else:
+             
+            # if stack is empty, put the element 
+            if (len(st) == 0):
+                st.append(fnt)
+ 
+            # if top element is less than element which 
+            # need to be puted, then return false. 
+            elif (len(st) != 0 and st[-1] < fnt): 
+                return False
+ 
+            # else put into the stack. 
+            else:
+                st.append(fnt)
+ 
+        # while expected element are coming 
+        # from stack, pop them out. 
+        while (len(st) != 0 and
+                   st[-1] == expected): 
+            st.pop() 
+            expected += 1
+ 
+    # if the final expected element value is equal 
+    # to initial Queue size and the stack is empty. 
+    if (expected - 1 == n and len(st) == 0): 
+        return True
+ 
+    return False
+ 
+# Driver Code
+if __name__ == '__main__':
+    q = Queue()
+    q.put(5) 
+    q.put(1) 
+    q.put(2) 
+    q.put(3) 
+    q.put(4) 
+ 
+    n = q.qsize() 
+ 
+    if checkSorted(n, q):
+        print("Yes")
+    else:
+        print("No")
+```
+### Hackerrank Challenge:
+Q1.You are given a string .
+Your task is to print all possible permutations of size k of the string in lexicographic sorted order.
+```python
+from itertools import permutations
+str1, int1 = input().split()
+
+for i in sorted(permutations(str1, int(int1))):
+    print (''.join(i))
+```
+Output:
+![Screenshot 2024-02-26 200512](https://github.com/bijayaroy/python-daily-learning/assets/93483189/384d7743-06ea-4b1f-92fa-9f03ca7e489d)
+
+Q2.You are given a string .
+Your task is to print all possible combinations, up to size , of the string in lexicographic sorted order.
+```python
+from itertools import combinations
+word , length  = input().split()
+for i in range(1, int(length)+1):
+    for j in combinations(sorted(word), i):
+        print (''.join(j))
+```
+Output:
+![Screenshot 2024-02-26 200809](https://github.com/bijayaroy/python-daily-learning/assets/93483189/e9e6cd7a-26c9-445e-9725-56495644c831)
+
+## Day 27: Stack and Queue:
+Q.How to Reverse a String using Stack
+```python
+def createStack():
+    stack = []
+    return stack
+ 
+# Function to determine the size of the stack
+ 
+ 
+def size(stack):
+    return len(stack)
+ 
+# Stack is empty if the size is 0
+ 
+ 
+def isEmpty(stack):
+    if size(stack) == 0:
+        return true
+ 
+# Function to add an item to stack .
+# It increases size by 1
+ 
+ 
+def push(stack, item):
+    stack.append(item)
+ 
+# Function to remove an item from stack.
+# It decreases size by 1
+ 
+ 
+def pop(stack):
+    if isEmpty(stack):
+        return
+    return stack.pop()
+ 
+# A stack based function to reverse a string
+ 
+ 
+def reverse(string):
+    n = len(string)
+ 
+    # Create a empty stack
+    stack = createStack()
+ 
+    # Push all characters of string to stack
+    for i in range(0, n, 1):
+        push(stack, string[i])
+ 
+    # Making the string empty since all
+    # characters are saved in stack
+    string = ""
+ 
+    # Pop all characters of string and
+    # put them back to string
+    for i in range(0, n, 1):
+        string += pop(stack)
+ 
+    return string
+# Driver program to test above functions
+string = "GeeksQuiz"
+string = reverse(string)
+print("Reversed string is " + string)
+```
+Q2.Implement Circular Queue using Array:
+```python
+class CircularQueue():
+ 
+    # constructor
+    def __init__(self, size): # initializing the class
+        self.size = size
+         
+        # initializing queue with none
+        self.queue = [None for i in range(size)] 
+        self.front = self.rear = -1
+ 
+    def enqueue(self, data):
+         
+        # condition if queue is full
+        if ((self.rear + 1) % self.size == self.front): 
+            print(" Queue is Full\n")
+             
+        # condition for empty queue
+        elif (self.front == -1): 
+            self.front = 0
+            self.rear = 0
+            self.queue[self.rear] = data
+        else:
+             
+            # next position of rear
+            self.rear = (self.rear + 1) % self.size 
+            self.queue[self.rear] = data
+             
+    def dequeue(self):
+        if (self.front == -1): # condition for empty queue
+            print ("Queue is Empty\n")
+             
+        # condition for only one element
+        elif (self.front == self.rear): 
+            temp=self.queue[self.front]
+            self.front = -1
+            self.rear = -1
+            return temp
+        else:
+            temp = self.queue[self.front]
+            self.front = (self.front + 1) % self.size
+            return temp
+ 
+    def display(self):
+     
+        # condition for empty queue
+        if(self.front == -1): 
+            print ("Queue is Empty")
+ 
+        elif (self.rear >= self.front):
+            print("Elements in the circular queue are:", 
+                                              end = " ")
+            for i in range(self.front, self.rear + 1):
+                print(self.queue[i], end = " ")
+            print ()
+ 
+        else:
+            print ("Elements in Circular Queue are:", 
+                                           end = " ")
+            for i in range(self.front, self.size):
+                print(self.queue[i], end = " ")
+            for i in range(0, self.rear + 1):
+                print(self.queue[i], end = " ")
+            print ()
+ 
+        if ((self.rear + 1) % self.size == self.front):
+            print("Queue is Full")
+ 
+# Driver Code
+ob = CircularQueue(5)
+ob.enqueue(14)
+ob.enqueue(22)
+ob.enqueue(13)
+ob.enqueue(-6)
+ob.display()
+print ("Deleted value = ", ob.dequeue())
+print ("Deleted value = ", ob.dequeue())
+ob.display()
+ob.enqueue(9)
+ob.enqueue(20)
+ob.enqueue(5)
+ob.display()
+```
+Q.Implement Stack using Queues
+```python
+from _collections import deque
+ 
+ 
+class Stack:
+ 
+    def __init__(self):
+ 
+        # Two inbuilt queues
+        self.q1 = deque()
+        self.q2 = deque()
+ 
+    def push(self, x):
+ 
+        # Push x first in empty q2
+        self.q2.append(x)
+ 
+        # Push all the remaining
+        # elements in q1 to q2.
+        while (self.q1):
+            self.q2.append(self.q1.popleft())
+ 
+        # swap the names of two queues
+        self.q1, self.q2 = self.q2, self.q1
+ 
+    def pop(self):
+ 
+        # if no elements are there in q1
+        if self.q1:
+            self.q1.popleft()
+ 
+    def top(self):
+        if (self.q1):
+            return self.q1[0]
+        return None
+ 
+    def size(self):
+        return len(self.q1)
+ 
+ 
+# Driver Code
+if __name__ == '__main__':
+    s = Stack()
+    s.push(1)
+    s.push(2)
+    s.push(3)
+ 
+    print("current size: ", s.size())
+    print(s.top())
+    s.pop()
+    print(s.top())
+    s.pop()
+    print(s.top())
+ 
+    print("current size: ", s.size())
+```
+### Hackerrank Challenge:
+Q1.You are given a string .
+Your task is to print all possible size  replacement combinations of the string in lexicographic sorted order.
+```python
+from itertools import combinations_with_replacement
+
+io = input().split();
+char = sorted(io[0]);
+N = int(io[1]);
+
+for i in combinations_with_replacement(char,N):
+    print(''.join(i));
+
+```
+Output:
+![Screenshot 2024-02-26 201015](https://github.com/bijayaroy/python-daily-learning/assets/93483189/7f5db6e6-db0a-4a29-8f3f-06c8a2c3de0f)
+
+Q2.You are given a string S. Suppose a character 'c' occurs consecutively X times in the string. Replace these consecutive occurrences of the character 'c' with (X,c)
+in the string.
+```python
+from itertools import *
+
+io = input()
+for i,j in groupby(map(int,list(io))):
+    print(tuple([len(list(j)), i]) ,end = " ")
+```
+Output:
+![Screenshot 2024-02-26 201308](https://github.com/bijayaroy/python-daily-learning/assets/93483189/30232612-e561-49ea-9f55-5d6482bc9bf8)
