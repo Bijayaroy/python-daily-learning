@@ -3249,3 +3249,210 @@ for i,j in groupby(map(int,list(io))):
 ```
 Output:
 ![Screenshot 2024-02-26 201308](https://github.com/bijayaroy/python-daily-learning/assets/93483189/30232612-e561-49ea-9f55-5d6482bc9bf8)
+
+## Day 28 : Searching Algorithm
+Linear Search:
+Linear Search is defined as a sequential search algorithm that starts at one end and goes through each element of a list until the desired element is found, otherwise the search continues till the end of the data set.
+
+
+How Does Linear Search Algorithm Work?
+- Every element is considered as a potential match for the key and checked for the same.
+- If any element is found equal to the key, the search is successful and the index of that element is returned.
+- If no element is found equal to the key, the search yields “No match found”.
+Implementation:
+```python
+def search(arr, N, x):
+ 
+    for i in range(0, N):
+        if (arr[i] == x):
+            return i
+    return -1
+ 
+ 
+# Driver Code
+if __name__ == "__main__":
+    arr = [2, 3, 4, 10, 40]
+    x = 10
+    N = len(arr)
+ 
+    # Function call
+    result = search(arr, N, x)
+    if(result == -1):
+        print("Element is not present in array")
+    else:
+        print("Element is present at index", result)
+```
+Time Complexity:
+
+- Best Case: In the best case, the key might be present at the first index. So the best case complexity is O(1)
+- Worst Case: In the worst case, the key might be present at the last index i.e., opposite to the end from which the search has started in the list. So the worst-case complexity is O(N) where N is the size of the list.
+- Average Case: O(N)
+Auxiliary Space: O(1) as except for the variable to iterate through the list, no other variable is used. 
+
+
+Advantages of Linear Search:
+- Linear search can be used irrespective of whether the array is sorted or not. It can be used on arrays of any data type.
+- Does not require any additional memory.
+It is a well-suited algorithm for small datasets.
+
+
+Drawbacks of Linear Search:
+- Linear search has a time complexity of O(N), which in turn makes it slow for large datasets.
+- Not suitable for large arrays.
+
+- 
+When to use Linear Search?
+- When we are dealing with a small dataset.
+- When you are searching for a dataset stored in contiguous memory.
+
+
+### Hackerrank Challenge:
+Q1. You are given a complex z. Your task is to convert it to polar coordinates.
+```python
+import cmath
+n = input()
+s = complex(n)
+print(abs(s))
+print(cmath.phase(s))
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/ae14e9de-2b28-47d9-90e9-0de1ef4fda54)
+
+Q2. ABC is a right triangle, 90o at B.
+Therefore, angle ABC = 90o.
+Point M is the midpoint of hypotenuse AC.
+
+You are given the lengths AB and BC.
+Your task is to find the angle MBC in degrees.
+```python
+from math import degrees, atan2
+
+AB = float(input())
+BC = float(input())
+
+MBC = round(degrees(atan2(AB, BC)))
+print((str(MBC)), chr(176), sep='')
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/58722500-cae9-4966-9963-304e41e21500)
+
+## Day 29 : Searching Algorithm (contd.)
+Sentinel Linear Search:
+Sentinel Linear Search as the name suggests is a type of Linear Search where the number of comparisons is reduced as compared to a traditional linear search. In a traditional linear search, only N comparisons are made, and in a Sentinel Linear Search, the sentinel value is used to avoid any out-of-bounds comparisons, but there is no additional comparison made specifically for the index of the element being searched.
+
+Implementation:
+```python
+def sentinelSearch(arr, n, key):
+ 
+    # Last element of the array
+    last = arr[n - 1]
+ 
+    # Element to be searched is
+    # placed at the last index
+    arr[n - 1] = key
+    i = 0
+ 
+    while (arr[i] != key):
+        i += 1
+ 
+    # Put the last element back
+    arr[n - 1] = last
+ 
+    if ((i < n - 1) or (arr[n - 1] == key)):
+        print(key, "is present at index", i)
+    else:
+        print("Element Not found")
+ 
+ 
+# Driver code
+arr = [10, 20, 180, 30, 60, 50, 110, 100, 70]
+n = len(arr)
+key = 180
+ 
+sentinelSearch(arr, n, key)
+```
+
+Time Complexity: O(N)
+Auxiliary Space: O(1)
+
+Binary Search:
+Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half. The idea of binary search is to use the information that the array is sorted and reduce the time complexity to O(log N). 
+
+Conditions for when to apply Binary Search in a Data Structure:
+To apply Binary Search algorithm:
+
+- The data structure must be sorted.
+- Access to any element of the data structure takes constant time.
+
+Implementation:
+```python
+def binarySearch(arr, l, r, x):
+ 
+    while l <= r:
+ 
+        mid = l + (r - l) // 2
+ 
+        # Check if x is present at mid
+        if arr[mid] == x:
+            return mid
+ 
+        # If x is greater, ignore left half
+        elif arr[mid] < x:
+            l = mid + 1
+ 
+        # If x is smaller, ignore right half
+        else:
+            r = mid - 1
+ 
+    # If we reach here, then the element
+    # was not present
+    return -1
+ 
+ 
+# Driver Code
+if __name__ == '__main__':
+    arr = [2, 3, 4, 10, 40]
+    x = 10
+ 
+    # Function call
+    result = binarySearch(arr, 0, len(arr)-1, x)
+    if result != -1:
+        print("Element is present at index", result)
+    else:
+        print("Element is not present in array")
+```
+### Hackerrank Challenge:
+Q1.Now, let's use our knowledge of sets and help Mickey.
+
+Ms. Gabriel Williams is a botany professor at District College. One day, she asked her student Mickey to compute the average of all the plants with distinct heights in her greenhouse.
+```python
+def average(array):
+    my_set = set(array)
+    avg = sum(my_set)/len(my_set)
+    
+    return (avg)
+         
+if __name__ == '__main__':
+    n = int(input())
+    arr = list(map(int, input().split()))
+    result = average(arr)
+    print(result)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/487e3fb3-1562-4cca-a991-2aa3023f1d65)
+
+Q2. Given 2 sets of integers, M and N, print their symmetric difference in ascending order. The term symmetric difference indicates those values that exist in either M or N but do not exist in both.
+
+```python
+n1 = int(input())
+set_a = set(map(int,input().split()))
+n2 = int(input())
+set_b = set(map(int,input().split()))
+a = (set_a.difference(set_b))
+b = (set_b.difference(set_a))
+ans = a.union(b)
+for i in sorted(ans):
+        print (i)
+```
+Output:
+![image](https://github.com/bijayaroy/python-daily-learning/assets/93483189/43244285-6195-4cac-8fac-52eb8ebe01ef)
